@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.name        = 'itunes_transporter_generator'
   s.version     = '0.1'
   s.date        = '2012-11-28'
-  s.summary     = "iTunes Transporter Store Package Generator"
-  s.description = "Builder"
+  s.summary     = "iTunes Transporter App Store Package Generator"
+  s.description = "A command-line tool for generating and packaging app store assets for Game Center and In-App Purchases"
   s.authors     = ["Colin Humber"]
   s.email       = 'colinhumber@gmail.com'
   s.homepage    = 'https://github.com/colinhumber/itunes_transporter_generator'
