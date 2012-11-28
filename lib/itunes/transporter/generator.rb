@@ -178,7 +178,9 @@ module Itunes
 					end
 				end
 
-				metadata_file.close()			
+				metadata_file.close()
+				
+				generate_itmsp			
 			end	
 		
 			def generate_itmsp
