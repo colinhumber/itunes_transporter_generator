@@ -5,7 +5,7 @@ Apple recently released their Transporter app (http://bit.ly/UcEhAh) which is a 
 
 ## Installation
 ```sh
-$ gem install itmsp
+$ gem install itunes_transporter_generator
 ```
 
 ## Usage
@@ -107,8 +107,6 @@ This configuration will generate the following metadata.xml:
             <leaderboard_id/>
             <reference_name>Top Scores</reference_name>
             <sort_ascending>false</sort_ascending>
-            <score_range_min/>
-            <score_range_max/>
             <locales>
               <locale name="en">
                 <title>Top Scores</title>
@@ -153,6 +151,12 @@ This configuration will generate the following metadata.xml:
   </software>
 </package>
 ```
+
+## Todo
+* TESTS. High on my list
+* Metadata validation. There are lots of rules depending on what values you provide. You should know when you generate the package if there are any issues instead of having Apple tell you when you upload
+* Anything else! Pull requests are welcome! This is my first Ruby project so I'm sure there is are a lot of improvements that can be made
+
 ## Contact
 
 Colin Humber
