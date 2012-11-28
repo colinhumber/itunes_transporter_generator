@@ -2,11 +2,15 @@
 
 require 'rubygems'
 require 'commander/import'
-require 'itunes/transporter'
 require 'itunes'
+require 'itunes/transporter/commands'
+
+Signal.trap("INT") {} # Suppress backtrace when exiting command
 
 program :version, Itunes::VERSION
 program :description, 'Generate iTunes Store Transporter package (.itmsp) from Achievements, Leaderboards, and/or In-App Purchases'
 program :help, 'Author', 'Colin Humber'
  
+program :help_formatter, :compact
+
 default_command :help
