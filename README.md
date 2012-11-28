@@ -1,5 +1,5 @@
 # itmsp
-**CLI for generating app store assets for Game Center and In-App Purchases**
+**CLI for generating and packaging app store assets for Game Center and In-App Purchases**
 
 Apple recently released their Transporter app (http://bit.ly/UcEhAh) which is a handy way to manage your App Store Packages (.itmsp) instead of having to input achievements, leaderboards, and in-app purchases through iTunes Connect. Unfortunately, there isn't an easy way to generate these packages. Why write XML by hand and deal with the hassle of calculating MD5 and file sizes? Why not define your Game Center and In-App Purchases in a simple format and have your App Store Package generated for you?
 
