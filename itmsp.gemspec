@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'itmsp'
-  s.version     = '0.0.0'
-  s.date        = '2012-11-26'
+  s.version     = '0.1'
+  s.date        = '2012-11-28'
   s.summary     = "iTunes Transporter Store Package Generator"
   s.description = "Builder"
   s.authors     = ["Colin Humber"]
