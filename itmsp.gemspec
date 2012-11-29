@@ -4,7 +4,7 @@ require "itunes"
 Gem::Specification.new do |s|
   s.name        = 'itunes_transporter_generator'
   s.version     = Itunes::VERSION
-  s.platform    = Gem::Platform::CURRENT
+  s.platform    = Gem::Platform::RUBY
   s.date        = '2012-11-28'
   s.summary     = "iTunes Transporter App Store Package Generator"
   s.description = "A command-line tool for generating and packaging app store assets for Game Center and In-App Purchases"
