@@ -39,36 +39,62 @@ achievements: # the order in which achievements are defined will be the order in
   name: First Achievement
   points: 10
   locales:
-      - name: en
-        title: First Achievement
-        before_earned_description: 'Complete a task'
-        after_earned_description: 'Completed a task'
-        after_earned_image: achievement.jpg
-        
+    - name: en
+      title: First Achievement
+      before_earned_description: Complete a task
+      after_earned_description: Completed a task
+      after_earned_image: test.jpg
+
 leaderboards: # the order in which leaderboards are defined will be the order in which they appear in Game Center
 - default: true # only one leaderboard can be set as default. 
   id: top_scores
   name: Top Scores
   locales:
-      - name: en
-        title: Top Scores
-        formatter_suffix: ' Points' # note the space. This must be provided if you want a space between the value and suffix
-        formatter_suffix_singular: ' Point'
-        formatter_type: INTEGER_COMMA_SEPARATOR
-        leaderboard_image: leaderboard.jpg
-        
+    - name: en
+      title: Top Scores
+      formatter_suffix: ' Points' # note the space. This must be provided if you want a space between the value and suffix
+      formatter_suffix_singular: ' Point'
+      formatter_type: INTEGER_COMMA_SEPARATOR
+      leaderboard_image: test.jpg
+
 purchases:
-- product_id: one_hundred_dollars
-  reference_name: '100 dollars'
-  type: consumable
-  review_screenshot_image: product1.jpg
-  products:
+  auto_renewables:
+    family:
+      name: Sample Product Group
+      review_screenshot_image: test.jpg
+      products:
+        - product_id: six_month_subscription
+          type: auto-renewable  # products in a family group must be of auto-renewable type and be the same product but with different durations
+          duration: 6 Months    # specific values defined in the app metadata specification outline
+          free_trial_duration: 1 Month
+          bonus_duration: 1 Month
+        - product_id: one_year_subscription
+          type: auto-renewable  # products in a family group must be of auto-renewable type and be the same product but with different durations
+          duration: 1 Year    # specific values defined in the app metadata specification outline
+          bonus_duration: 2 Months
+  other:
+    - product_id: one_hundred_dollars
+      reference_name: 100 dollars
+      type: consumable
+      review_screenshot_image: test.jpg
+      products:
       - cleared_for_sale: true
         wholesale_price_tier: 1 # pricing tier matrix is available in Exhibit C of the iOS Paid Applications contract in the Contracts, Tax, and Banking section of iTunes Connect 
-  locales:
-      - name: en
-        title: '$100'
-        description: 'An extra $100 to help you out'
+      locales:
+        - name: en
+          title: $100
+          description: An extra $100 for you
+    - product_id: new_level
+      reference_name: Unlocks a new level
+      type: non-consumable
+      review_screenshot_image: test.jpg
+      products:
+        - cleared_for_sale: true
+          wholesale_price_tier: 3 # pricing tier matrix is available in Exhibit C of the iOS Paid Applications contract in the Contracts, Tax, and Banking section of iTunes Connect 
+      locales:
+        - name: en
+          title: Unlocks a new level
+          description: Try your luck at this new level
 ```
 
 This configuration will generate the following metadata.xml:

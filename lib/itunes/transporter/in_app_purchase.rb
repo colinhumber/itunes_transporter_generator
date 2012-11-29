@@ -6,8 +6,8 @@ module Itunes
 			end
     end
 
-    class Product < Struct.new(:cleared_for_sale, :intervals, :should_remove, :wholesale_price_tier)=
-			def to_s
+    class Product < Struct.new(:cleared_for_sale, :intervals, :should_remove, :wholesale_price_tier)
+    	def to_s
 				"Cleared for sale: #{self.cleared_for_sale}, Tier: #{self.wholesale_pricing_tier}"
 			end
     end

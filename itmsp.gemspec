@@ -1,6 +1,10 @@
+$:.push File.expand_path("../lib", __FILE__)
+require "itunes"
+
 Gem::Specification.new do |s|
   s.name        = 'itunes_transporter_generator'
-  s.version     = '0.2'
+  s.version     = Itunes::VERSION
+  s.platform    = Gem::Platform::CURRENT
   s.date        = '2012-11-28'
   s.summary     = "iTunes Transporter App Store Package Generator"
   s.description = "A command-line tool for generating and packaging app store assets for Game Center and In-App Purchases"
@@ -10,7 +14,7 @@ Gem::Specification.new do |s|
   
   s.add_dependency 'builder', '~>3.0.0'
 
-  s.files       	= Dir["./**/*"].reject { |file| file =~ /\.\/(bin|log|pkg|script|spec|test|vendor)/ }  
+  s.files       	  = Dir["./**/*"].reject { |file| file =~ /\.\/(bin|log|pkg|script|spec|test|vendor)/ }  
   s.executables   	= `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths 	= ['lib']
 end

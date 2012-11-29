@@ -1,5 +1,6 @@
 require 'builder'
 require 'digest'
+require 'fileutils'
 require 'itunes/transporter/helpers'
 
 module Itunes
@@ -46,12 +47,7 @@ module Itunes
                 doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
                 doc.after_earned_image() do
-                  image_path = Dir.pwd + "/#{locale.after_earned_image}"
-                  @files_to_process << image_path
-            
-                  doc.file_name(locale.after_earned_image)
-                  doc.size(File.size?(image_path))
-                  doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')
+                  create_screenshot_xml(doc, locale.after_earned_image)
                 end
               end
             end
@@ -70,72 +66,158 @@ module Itunes
     
           doc.sort_ascending(leaderboard.sort_ascending)
     
-          if (doc.score_range_min != doc.score_range_max)
-            doc.score_range_min(leaderboard.score_range_min)
-            doc.score_range_max(leaderboard.score_range_max)      
-          end
+          doc.score_range_min(leaderboard.score_range_min) if leaderboard.score_range_min
+          doc.score_range_max(leaderboard.score_range_max) if leaderboard.score_range_max
     
           doc.locales() do
             leaderboard.locales.each do |locale|
               doc.locale('name' => locale.name) do
                 doc.title(locale.title)
           
-                if (locale.formatter_suffix)
-                  doc.formatter_suffix(locale.formatter_suffix)
-                end
-          
-                if (locale.formatter_suffix_singular)
-                  doc.formatter_suffix_singular(locale.formatter_suffix_singular)
-                end
+                doc.formatter_suffix(locale.formatter_suffix) if locale.formatter_suffix         
+                doc.formatter_suffix_singular(locale.formatter_suffix_singular) if locale.formatter_suffix_singular
           
                 doc.formatter_type(locale.formatter_type)
                 doc.leaderboard_image() do
-                  image_path = Dir.pwd + "/#{locale.leaderboard_image}"
-                  @files_to_process << image_path
-            
-                  doc.file_name(locale.leaderboard_image)
-                  doc.size(File.size?(image_path))
-                  doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')                 
+                  create_screenshot_xml(doc, locale.leaderboard_image)
                 end
               end       
             end
           end
         end
       end
-    
-      def create_purchase_xml(doc, purchase)
+
+      def create_in_app_purchase_xml(doc, purchase)
         doc.in_app_purchase() do
           doc.product_id(@id_prefix + purchase.product_id)
-          doc.reference_name(purchase.reference_name)
+          doc.reference_name(purchase.reference_name) if purchase.reference_name
+          doc.duration(purchase.duration) if purchase.duration
+          doc.free_trial_duration(purchase.free_trial_duration) if purchase.free_trial_duration
+          doc.bonus_duration(purchase.bonus_duration) if purchase.bonus_duration
+
           doc.type(purchase.type)
         
           doc.products() do
             purchase.products.each do |product|
               doc.product() do
                 doc.cleared_for_sale(product.cleared_for_sale)
-                doc.wholesale_price_tier(product.wholesale_price_tier)
+                doc.wholesale_price_tier(product.wholesale_price_tier) if product.wholesale_price_tier
+
+                doc.intervals() do
+                  product.intervals.each do |interval|
+                    doc.interval() do
+                      doc.start_date(interval.start_date) if interval.start_date
+                      doc.end_date(interval.end_date) if interval.end_date
+                      doc.wholesale_price_tier(interval.wholesale_price_tier)
+                    end
+                  end if product.intervals.count > 0
+                end
               end
             end
           end
-        
+
           doc.locales() do
             purchase.locales.each do |locale|
-              doc.locale('name' => locale.name) do
-                doc.title(locale.title)
-                doc.description(locale.description)
-              end
+              create_purchase_locale_xml(doc, locale)            
+            end
+          end if purchase.locales.count > 0
+        end
+
+        doc.review_screenshot() do
+          create_screenshot_xml(doc, purchase.review_screenshot_image)  
+        end if purchase.review_screenshot_image
+      end
+
+      def create_purchase_locale_xml(doc, locale)
+        doc.locale('name' => locale.name) do
+          doc.title(locale.title)
+          doc.description(locale.description)
+          doc.publication_name(locale.publication_name) if locale.publication_name
+        end
+      end
+
+      def create_purchase_family_xml(doc, family)
+        doc.family('name' => family.name) do
+          doc.locales() do
+            family.locales.each do |locale|
+              create_purchase_locale_xml(doc, locale)
             end
           end
-        
+
           doc.review_screenshot() do
-            image_path = Dir.pwd + "/#{purchase.review_screenshot_image}"
-            @files_to_process << image_path
-            
-            doc.file_name(purchase.review_screenshot_image)
-            doc.size(File.size?(image_path))
-            doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')   
+            create_screenshot_xml(doc, family.review_screenshot_image)  
+          end
+
+          doc.review_notes(family.review_notes)
+
+          family.purchases.each do |purchase|
+            create_in_app_purchase_xml(doc, purchase)
           end
         end
+      end
+
+      def create_screenshot_xml(doc, file_name)
+        image_path = Dir.pwd + "/#{file_name}"
+        @files_to_process << image_path
+            
+        doc.file_name(file_name)
+        doc.size(File.size?(image_path))
+        doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')   
+      end
+
+      def create_other_purchases_xml(doc, purchases)
+        purchases.each do |purchase|
+          create_in_app_purchase_xml(doc, purchase)
+        end
+        # doc.in_app_purchase() do
+        #   doc.product_id(@id_prefix + purchase.product_id)
+        #   doc.reference_name(purchase.reference_name)
+        #   doc.duration(purchase.duration) if purchase.duration
+        #   doc.free_trial_duration(purchase.free_trial_duration) if purchase.free_trial_duration
+        #   doc.bonus_duration(purchase.bonus_duration) if purchase.bonus_duration
+
+        #   doc.type(purchase.type)
+        
+        #   doc.products() do
+        #     purchase.products.each do |product|
+        #       doc.product() do
+        #         doc.cleared_for_sale(product.cleared_for_sale)
+        #         doc.wholesale_price_tier(product.wholesale_price_tier)
+
+        #         if product.intervals.count > 0
+        #           doc.intervals() do
+        #             product.intervals.each do |interval|
+        #               doc.interval()
+        #               doc.start_date(interval.start_date) if interval.start_date
+        #               doc.end_date(interval.end_date) if interval.end_date
+
+        #               doc.wholesale_price_tier(interval.wholesale_price_tier)
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
+        #   end
+        
+          # doc.locales() do
+          #   purchase.locales.each do |locale|
+          #     doc.locale('name' => locale.name) do
+          #       doc.title(locale.title)
+          #       doc.description(locale.description)
+          #       doc.publication_name(locale.publication_name) if locale.publication_name
+          #     end
+          #   end
+          # end
+        
+          # doc.review_screenshot() do
+          #   image_path = Dir.pwd + "/#{purchase.review_screenshot_image}"
+          #   @files_to_process << image_path
+            
+          #   doc.file_name(purchase.review_screenshot_image)
+          #   doc.size(File.size?(image_path))
+          #   doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')   
+          # end
+        #end
       end
 
       def generate_metadata   
@@ -150,7 +232,8 @@ module Itunes
             doc.vendor_id(@vendor_id)
             doc.software_metadata() do
               doc.game_center() do
-                if (@achievements.count > 0)
+                # generate XML for all achievements
+                if @achievements.count > 0
                   doc.achievements() do
                     @achievements.each_with_index do |val, index|
                       create_achievement_xml(doc, val, index + 1)
@@ -158,7 +241,8 @@ module Itunes
                   end
                 end
               
-                if (@leaderboards.count > 0)
+                # generate XML for all leaderboards
+                if @leaderboards.count > 0
                   doc.leaderboards() do
                     @leaderboards.each_with_index do |val, index|
                       create_leaderboard_xml(doc, val, index + 1)
@@ -166,11 +250,18 @@ module Itunes
                   end
                 end
               
-                if (@purchases.count > 0)
+                # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
+                if @purchases.count > 0
+                  # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
+                  auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
+                  other_purchases = @purchases[:other_purchases]
+
                   doc.in_app_purchases() do
-                    @purchases.each do |val|
-                      create_purchase_xml(doc, val)
-                    end
+                    create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
+                    create_other_purchases_xml(doc, other_purchases) if other_purchases
+                    # @purchases.each do |val|
+                    #   create_purchase_xml(doc, val)
+                    # end
                   end
                 end
               end
@@ -185,6 +276,8 @@ module Itunes
     
       def generate_itmsp
         itmsp_dir = @vendor_id + '.itmsp'
+
+        FileUtils.rm_rf(itmsp_dir) if Dir.exists?(itmsp_dir)
         Dir.mkdir(itmsp_dir)
       
         @files_to_process.each do |file|
