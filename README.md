@@ -157,6 +157,7 @@ This configuration will generate the following metadata.xml:
 * RDocs. Definitely need to document this.
 * Metadata validation. There are lots of rules depending on what values you provide. You should know when you generate the package if there are any issues instead of having Apple tell you when you upload
 * Anything else! Pull requests are welcome! This is my first Ruby project so I'm sure there is are a lot of improvements that can be made
+* Finish in-app purchase XML generation (lots of different options here!) 
 
 ## Contact
 
