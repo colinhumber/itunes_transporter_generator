@@ -183,8 +183,6 @@ This configuration will generate the following metadata.xml:
                 <product>
                   <cleared_for_sale>true</cleared_for_sale>
                   <wholesale_price_tier>5</wholesale_price_tier>
-                  <intervals>
-                  </intervals>
                 </product>
               </products>
             </in_app_purchase>
@@ -197,8 +195,6 @@ This configuration will generate the following metadata.xml:
                 <product>
                   <cleared_for_sale>true</cleared_for_sale>
                   <wholesale_price_tier>9</wholesale_price_tier>
-                  <intervals>
-                  </intervals>
                 </product>
               </products>
             </in_app_purchase>
@@ -211,8 +207,6 @@ This configuration will generate the following metadata.xml:
               <product>
                 <cleared_for_sale>true</cleared_for_sale>
                 <wholesale_price_tier>1</wholesale_price_tier>
-                <intervals>
-                </intervals>
               </product>
             </products>
             <locales>

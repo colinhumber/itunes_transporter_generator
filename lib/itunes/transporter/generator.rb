@@ -110,8 +110,8 @@ module Itunes
                       doc.end_date(interval.end_date) if interval.end_date
                       doc.wholesale_price_tier(interval.wholesale_price_tier)
                     end
-                  end if product.intervals.count > 0
-                end
+                  end 
+                end if product.intervals.count > 0
               end
             end
           end
