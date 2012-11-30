@@ -58,28 +58,36 @@ leaderboards: # the order in which leaderboards are defined will be the order in
       leaderboard_image: test.jpg
 
 purchases:
-  auto_renewables:
+  auto_renewable_purchases:
     family:
       name: Sample Product Group
       review_screenshot_image: test.jpg
-      products:
+      purchases:
         - product_id: six_month_subscription
           type: auto-renewable  # products in a family group must be of auto-renewable type and be the same product but with different durations
           duration: 6 Months    # specific values defined in the app metadata specification outline
           free_trial_duration: 1 Month
           bonus_duration: 1 Month
+          cleared_for_sale: true
+          wholesale_price_tier: 5
         - product_id: one_year_subscription
           type: auto-renewable  # products in a family group must be of auto-renewable type and be the same product but with different durations
           duration: 1 Year    # specific values defined in the app metadata specification outline
           bonus_duration: 2 Months
-  other:
+          cleared_for_sale: true
+          wholesale_price_tier: 9
+      locales:
+        - name: en
+          title: Sample Product Group
+          description: All your products in this sample group
+          publication_name: Sample Product Group
+  other_purchases:
     - product_id: one_hundred_dollars
       reference_name: 100 dollars
       type: consumable
       review_screenshot_image: test.jpg
-      products:
-      - cleared_for_sale: true
-        wholesale_price_tier: 1 # pricing tier matrix is available in Exhibit C of the iOS Paid Applications contract in the Contracts, Tax, and Banking section of iTunes Connect 
+      cleared_for_sale: true
+      wholesale_price_tier: 1 # pricing tier matrix is available in Exhibit C of the iOS Paid Applications contract in the Contracts, Tax, and Banking section of iTunes Connect 
       locales:
         - name: en
           title: $100
@@ -88,9 +96,11 @@ purchases:
       reference_name: Unlocks a new level
       type: non-consumable
       review_screenshot_image: test.jpg
-      products:
-        - cleared_for_sale: true
-          wholesale_price_tier: 3 # pricing tier matrix is available in Exhibit C of the iOS Paid Applications contract in the Contracts, Tax, and Banking section of iTunes Connect 
+      cleared_for_sale: true
+      intervals:
+        - start_date: 2013-01-31
+          end_date: 2013-02-28
+          wholesale_price_tier: 3
       locales:
         - name: en
           title: Unlocks a new level
