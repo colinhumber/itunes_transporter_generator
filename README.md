@@ -32,7 +32,7 @@ Below is a sample configuration file describing an achievement, leaderboard, and
 ```yaml
 provider: SampleCompany # optional if team_id is supplied
 team_id: ABCDE12345 # optional if provider is supplied
-vendor_id: sample sku # the application's SKU as definied in iTunes Connect 
+vendor_id: sample sku # the application's SKU as defined in iTunes Connect 
 id_prefix: com.samplecompany.applicationname. # if supplied, this will be prefixed to achievement, leaderboard, and in-app purchase IDs
 achievements: # the order in which achievements are defined will be the order in which they appear in Game Center
 - id: first_achievement
