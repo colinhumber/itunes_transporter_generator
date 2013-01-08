@@ -169,55 +169,6 @@ module Itunes
         purchases.each do |purchase|
           create_in_app_purchase_xml(doc, purchase)
         end
-        # doc.in_app_purchase() do
-        #   doc.product_id(@id_prefix + purchase.product_id)
-        #   doc.reference_name(purchase.reference_name)
-        #   doc.duration(purchase.duration) if purchase.duration
-        #   doc.free_trial_duration(purchase.free_trial_duration) if purchase.free_trial_duration
-        #   doc.bonus_duration(purchase.bonus_duration) if purchase.bonus_duration
-
-        #   doc.type(purchase.type)
-        
-        #   doc.products() do
-        #     purchase.products.each do |product|
-        #       doc.product() do
-        #         doc.cleared_for_sale(product.cleared_for_sale)
-        #         doc.wholesale_price_tier(product.wholesale_price_tier)
-
-        #         if product.intervals.count > 0
-        #           doc.intervals() do
-        #             product.intervals.each do |interval|
-        #               doc.interval()
-        #               doc.start_date(interval.start_date) if interval.start_date
-        #               doc.end_date(interval.end_date) if interval.end_date
-
-        #               doc.wholesale_price_tier(interval.wholesale_price_tier)
-        #             end
-        #           end
-        #         end
-        #       end
-        #     end
-        #   end
-        
-          # doc.locales() do
-          #   purchase.locales.each do |locale|
-          #     doc.locale('name' => locale.name) do
-          #       doc.title(locale.title)
-          #       doc.description(locale.description)
-          #       doc.publication_name(locale.publication_name) if locale.publication_name
-          #     end
-          #   end
-          # end
-        
-          # doc.review_screenshot() do
-          #   image_path = Dir.pwd + "/#{purchase.review_screenshot_image}"
-          #   @files_to_process << image_path
-            
-          #   doc.file_name(purchase.review_screenshot_image)
-          #   doc.size(File.size?(image_path))
-          #   doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')   
-          # end
-        #end
       end
 
       def generate_metadata   

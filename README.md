@@ -10,11 +10,11 @@ $ gem install itunes_transporter_generator
 
 ## Usage
 
-### Get Familiar With The Spec
+### Get familiar with the spec
 First, you'll need to be familiar with the app metadata specification (download from [here](http://bit.ly/TtHMF6)), which outlines all the possible information describing an achievement, leaderboard, or in-app purchase.
 
 ### Describe your application metadata
-Next, you'll need to create a YAML file describing your company information and achievement, leaderboard, and/or in-app purchase details.
+Next, you'll need to create a YAML file describing your company information and achievement, leaderboard, and/or in-app purchase details. The beauty of describing your app store assets in YAML is no hand writing XML making it understandable at a glance, and you can store your configuration in source control.
 
 ### Generate the .itmsp
 This is as simple as running the following command in the folder containing your YAML config file and all referenced images.
@@ -32,7 +32,7 @@ Below is a sample configuration file describing an achievement, leaderboard, and
 ```yaml
 provider: SampleCompany # optional if team_id is supplied
 team_id: ABCDE12345 # optional if provider is supplied
-vendor_id: sample sku # the application's SKU as definied in iTunes Connect 
+vendor_id: sample sku # the application's SKU as defined in iTunes Connect 
 id_prefix: com.samplecompany.applicationname. # if supplied, this will be prefixed to achievement, leaderboard, and in-app purchase IDs
 achievements: # the order in which achievements are defined will be the order in which they appear in Game Center
 - id: first_achievement
@@ -205,8 +205,7 @@ This configuration will generate the following metadata.xml:
             <type>consumable</type>
             <products>
               <product>
-                <cleared_for_sale>true</cleared_for_sale>
-                <wholesale_price_tier>1</wholesale_price_tier>
+                <cleared_for_sale/>
               </product>
             </products>
             <locales>
@@ -215,26 +214,19 @@ This configuration will generate the following metadata.xml:
                 <description>An extra $100 for you</description>
               </locale>
             </locales>
+            <review_screenshot>
+              <file_name>test.jpg</file_name>
+              <size>20092</size>
+              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+            </review_screenshot>
           </in_app_purchase>
-          <review_screenshot>
-            <file_name>test.jpg</file_name>
-            <size>20092</size>
-            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-          </review_screenshot>
           <in_app_purchase>
             <product_id>com.samplecompany.applicationname.new_level</product_id>
             <reference_name>Unlocks a new level</reference_name>
             <type>non-consumable</type>
             <products>
               <product>
-                <cleared_for_sale>true</cleared_for_sale>
-                <intervals>
-                  <interval>
-                    <start_date>2013-01-31</start_date>
-                    <end_date>2013-02-28</end_date>
-                    <wholesale_price_tier>3</wholesale_price_tier>
-                  </interval>
-                </intervals>
+                <cleared_for_sale/>
               </product>
             </products>
             <locales>
@@ -243,12 +235,12 @@ This configuration will generate the following metadata.xml:
                 <description>Try your luck at this new level</description>
               </locale>
             </locales>
+            <review_screenshot>
+              <file_name>test.jpg</file_name>
+              <size>20092</size>
+              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+            </review_screenshot>
           </in_app_purchase>
-          <review_screenshot>
-            <file_name>test.jpg</file_name>
-            <size>20092</size>
-            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-          </review_screenshot>
         </in_app_purchases>
       </game_center>
     </software_metadata>
