@@ -205,8 +205,7 @@ This configuration will generate the following metadata.xml:
             <type>consumable</type>
             <products>
               <product>
-                <cleared_for_sale>true</cleared_for_sale>
-                <wholesale_price_tier>1</wholesale_price_tier>
+                <cleared_for_sale/>
               </product>
             </products>
             <locales>
@@ -215,26 +214,19 @@ This configuration will generate the following metadata.xml:
                 <description>An extra $100 for you</description>
               </locale>
             </locales>
+            <review_screenshot>
+              <file_name>test.jpg</file_name>
+              <size>20092</size>
+              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+            </review_screenshot>
           </in_app_purchase>
-          <review_screenshot>
-            <file_name>test.jpg</file_name>
-            <size>20092</size>
-            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-          </review_screenshot>
           <in_app_purchase>
             <product_id>com.samplecompany.applicationname.new_level</product_id>
             <reference_name>Unlocks a new level</reference_name>
             <type>non-consumable</type>
             <products>
               <product>
-                <cleared_for_sale>true</cleared_for_sale>
-                <intervals>
-                  <interval>
-                    <start_date>2013-01-31</start_date>
-                    <end_date>2013-02-28</end_date>
-                    <wholesale_price_tier>3</wholesale_price_tier>
-                  </interval>
-                </intervals>
+                <cleared_for_sale/>
               </product>
             </products>
             <locales>
@@ -243,12 +235,12 @@ This configuration will generate the following metadata.xml:
                 <description>Try your luck at this new level</description>
               </locale>
             </locales>
+            <review_screenshot>
+              <file_name>test.jpg</file_name>
+              <size>20092</size>
+              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+            </review_screenshot>
           </in_app_purchase>
-          <review_screenshot>
-            <file_name>test.jpg</file_name>
-            <size>20092</size>
-            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-          </review_screenshot>
         </in_app_purchases>
       </game_center>
     </software_metadata>
