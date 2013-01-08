@@ -121,11 +121,11 @@ module Itunes
               create_purchase_locale_xml(doc, locale)            
             end
           end if purchase.locales.count > 0
-        end
 
-        doc.review_screenshot() do
-          create_screenshot_xml(doc, purchase.review_screenshot_image)  
-        end if purchase.review_screenshot_image
+          doc.review_screenshot() do
+            create_screenshot_xml(doc, purchase.review_screenshot_image)  
+          end if purchase.review_screenshot_image
+        end
       end
 
       def create_purchase_locale_xml(doc, locale)

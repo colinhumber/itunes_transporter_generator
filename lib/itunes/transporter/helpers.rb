@@ -86,6 +86,8 @@ module Itunes
       end
       
       def parse_auto_renewables(auto_renewables)
+        return nil if auto_renewables == nil
+
         fam = auto_renewables['family']
         family = Family.new
         family.name = fam['name']
@@ -128,6 +130,8 @@ module Itunes
       end
 
       def parse_other_purchases(other_purchases)
+        return nil if other_purchases == nil
+
         purchases = []
 
         other_purchases.each do |pur|
