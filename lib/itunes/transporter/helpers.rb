@@ -57,6 +57,7 @@ module Itunes
         if objs.has_key?('leaderboards')
           objs['leaderboards'].each do |dict|
             leaderboard = Leaderboard.new
+            leaderboard.id = dict['id']
             leaderboard.default = dict['default']
             leaderboard.name = dict['name']
             leaderboard.aggregate_parent_leaderboard = dict['aggregate_parent_leaderboard']
