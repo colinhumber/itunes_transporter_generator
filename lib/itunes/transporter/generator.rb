@@ -78,10 +78,12 @@ module Itunes
                 doc.formatter_suffix_singular(locale.formatter_suffix_singular) if locale.formatter_suffix_singular
           
                 doc.formatter_type(locale.formatter_type)
-                doc.leaderboard_image() do
-                  create_screenshot_xml(doc, locale.leaderboard_image)
+                if locale.leaderboard_image
+                  doc.leaderboard_image() do
+                    create_screenshot_xml(doc, locale.leaderboard_image)
+                  end
                 end
-              end       
+              end
             end
           end
         end
