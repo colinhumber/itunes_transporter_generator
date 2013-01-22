@@ -46,7 +46,7 @@ module Itunes
                 doc.title(locale.title)
                 doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
-                doc.after_earned_image() do
+                doc.achievement_after_earned_image() do
                   create_screenshot_xml(doc, locale.after_earned_image)
                 end
               end
