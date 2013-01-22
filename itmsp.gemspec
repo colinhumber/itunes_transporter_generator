@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/colinhumber/itunes_transporter_generator'
   
   s.add_dependency 'builder', '~>3.0.0'
+  s.add_dependency 'commander', '~> 4.1.3'
 
   s.files       	  = Dir["./**/*"].reject { |file| file =~ /\.\/(bin|log|pkg|script|spec|test|vendor)/ }  
   s.executables   	= `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
