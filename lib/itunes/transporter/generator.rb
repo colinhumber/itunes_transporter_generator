@@ -31,6 +31,7 @@ module Itunes
         @achievements = metadata[:achievements]
         @leaderboards = metadata[:leaderboards]
         @purchases = metadata[:purchases]
+        @default_achievement_image = metadata[:default_achievement_image]
       end
         
       def create_achievement_xml(doc, achievement, position)
@@ -47,7 +48,7 @@ module Itunes
                 doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
                 doc.achievement_after_earned_image() do
-                  create_screenshot_xml(doc, locale.after_earned_image)
+                  create_screenshot_xml(doc, locale.after_earned_image || @default_achievement_image)
                 end
               end
             end

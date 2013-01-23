@@ -12,6 +12,7 @@ module Itunes
           :team_id => objs['team_id'],
           :vendor_id => objs['vendor_id'],
           :id_prefix => objs['id_prefix'] || '',
+          :default_achievement_image => objs['default_achievement_image'],
           :achievements => parse_achievements(objs), 
           :leaderboards => parse_leaderboards(objs), 
           :purchases => parse_purchases(objs) 
