@@ -31,6 +31,7 @@ module Itunes
         @achievements = metadata[:achievements]
         @leaderboards = metadata[:leaderboards]
         @purchases = metadata[:purchases]
+        @default_achievement_image = metadata[:default_achievement_image]
       end
         
       def create_achievement_xml(doc, achievement, position)
@@ -46,8 +47,8 @@ module Itunes
                 doc.title(locale.title)
                 doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
-                doc.after_earned_image() do
-                  create_screenshot_xml(doc, locale.after_earned_image)
+                doc.achievement_after_earned_image() do
+                  create_screenshot_xml(doc, locale.after_earned_image || @default_achievement_image)
                 end
               end
             end
@@ -57,7 +58,7 @@ module Itunes
     
       def create_leaderboard_xml(doc, leaderboard, position)
         doc.leaderboard('default' => leaderboard.default, 'position' => position) do
-          doc.leaderboard_id(leaderboard.id)
+          doc.leaderboard_id(@id_prefix + leaderboard.id)
           doc.reference_name(leaderboard.name)
     
           if leaderboard.aggregate_parent_leaderboard
@@ -78,10 +79,12 @@ module Itunes
                 doc.formatter_suffix_singular(locale.formatter_suffix_singular) if locale.formatter_suffix_singular
           
                 doc.formatter_type(locale.formatter_type)
-                doc.leaderboard_image() do
-                  create_screenshot_xml(doc, locale.leaderboard_image)
+                if locale.leaderboard_image
+                  doc.leaderboard_image() do
+                    create_screenshot_xml(doc, locale.leaderboard_image)
+                  end
                 end
-              end       
+              end
             end
           end
         end
@@ -200,20 +203,20 @@ module Itunes
                     end
                   end
                 end
+              end
               
                 # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
-                if @purchases.count > 0
-                  # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
-                  auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
-                  other_purchases = @purchases[:other_purchases]
+              if @purchases.count > 0
+                # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
+                auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
+                other_purchases = @purchases[:other_purchases]
 
-                  doc.in_app_purchases() do
-                    create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
-                    create_other_purchases_xml(doc, other_purchases) if other_purchases
-                    # @purchases.each do |val|
-                    #   create_purchase_xml(doc, val)
-                    # end
-                  end
+                doc.in_app_purchases() do
+                  create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
+                  create_other_purchases_xml(doc, other_purchases) if other_purchases
+                  # @purchases.each do |val|
+                  #   create_purchase_xml(doc, val)
+                  # end
                 end
               end
             end
