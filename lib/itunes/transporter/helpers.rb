@@ -92,6 +92,7 @@ module Itunes
         family = Family.new
         family.name = fam['name']
         family.review_screenshot_image = fam['review_screenshot_image']
+        family.review_notes = fam['review_notes']
         family.purchases = []
         family.locales = []
 
