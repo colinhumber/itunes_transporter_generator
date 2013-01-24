@@ -200,20 +200,20 @@ module Itunes
                     end
                   end
                 end
+              end
               
-                # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
-                if @purchases.count > 0
-                  # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
-                  auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
-                  other_purchases = @purchases[:other_purchases]
+              # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
+              if @purchases.count > 0
+                # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
+                auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
+                other_purchases = @purchases[:other_purchases]
 
-                  doc.in_app_purchases() do
-                    create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
-                    create_other_purchases_xml(doc, other_purchases) if other_purchases
-                    # @purchases.each do |val|
-                    #   create_purchase_xml(doc, val)
-                    # end
-                  end
+                doc.in_app_purchases() do
+                  create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
+                  create_other_purchases_xml(doc, other_purchases) if other_purchases
+                  # @purchases.each do |val|
+                  #   create_purchase_xml(doc, val)
+                  # end
                 end
               end
             end
