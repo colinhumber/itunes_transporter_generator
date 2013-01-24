@@ -177,8 +177,8 @@ module Itunes
         doc = Builder::XmlMarkup.new(:target => metadata_file, :indent => 2)
         doc.instruct!(:xml, :version => '1.0', :encoding => 'UTF-8')
         doc.package('xmlns' => 'http://apple.com/itunes/importer', 'version' => 'software5.0') do
-          doc.provider(@provider)
-          doc.team_id(@team_id)
+          doc.provider(@provider) if @provider
+          doc.team_id(@team_id) if @team_id
           doc.software() do
             doc.vendor_id(@vendor_id)
             doc.software_metadata() do
