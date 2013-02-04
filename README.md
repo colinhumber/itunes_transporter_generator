@@ -43,7 +43,7 @@ achievements: # the order in which achievements are defined will be the order in
       title: First Achievement
       before_earned_description: Complete a task
       after_earned_description: Completed a task
-      after_earned_image: test.jpg
+      achievement_after_earned_image: test.jpg
 
 leaderboards: # the order in which leaderboards are defined will be the order in which they appear in Game Center
 - default: true # only one leaderboard can be set as default. 
@@ -129,11 +129,11 @@ This configuration will generate the following metadata.xml:
                 <title>First Achievement</title>
                 <before_earned_description>Complete a task</before_earned_description>
                 <after_earned_description>Completed a task</after_earned_description>
-                <after_earned_image>
+                <achievement_after_earned_image>
                   <file_name>test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-                </after_earned_image>
+                </achievement_after_earned_image>
               </locale>
             </locales>
           </achievement>

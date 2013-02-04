@@ -11,7 +11,7 @@ achievements: # the order in which achievements are defined will be the order in
       title: First Achievement
       before_earned_description: Complete a task
       after_earned_description: Completed a task
-      after_earned_image: test.jpg
+      achievement_after_earned_image: test.jpg
 
 leaderboards: # the order in which leaderboards are defined will be the order in which they appear in Game Center
 - default: true # only one leaderboard can be set as default. 

@@ -38,7 +38,7 @@ module Itunes
               locale.title = loc['title']
               locale.before_earned_description = loc['before_earned_description']
               locale.after_earned_description = loc['after_earned_description']
-              locale.after_earned_image = loc['after_earned_image']
+              locale.achievement_after_earned_image = loc['achievement_after_earned_image']
               locale.should_remove = loc['should_remove'] || false
               
               achievement.locales << locale
@@ -58,6 +58,7 @@ module Itunes
           objs['leaderboards'].each do |dict|
             leaderboard = Leaderboard.new
             leaderboard.default = dict['default']
+            leaderboard.id = dict['id']
             leaderboard.name = dict['name']
             leaderboard.aggregate_parent_leaderboard = dict['aggregate_parent_leaderboard']
             leaderboard.sort_ascending = dict['sort_ascending'] || false

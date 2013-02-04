@@ -46,8 +46,8 @@ module Itunes
                 doc.title(locale.title)
                 doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
-                doc.after_earned_image() do
-                  create_screenshot_xml(doc, locale.after_earned_image)
+                doc.achievement_after_earned_image() do
+                  create_screenshot_xml(doc, locale.achievement_after_earned_image)
                 end
               end
             end
@@ -177,7 +177,10 @@ module Itunes
         doc = Builder::XmlMarkup.new(:target => metadata_file, :indent => 2)
         doc.instruct!(:xml, :version => '1.0', :encoding => 'UTF-8')
         doc.package('xmlns' => 'http://apple.com/itunes/importer', 'version' => 'software5.0') do
-          doc.provider(@provider)
+          if @provider && @provider.length > 0
+            doc.provider(@provider)
+          end
+
           doc.team_id(@team_id)
           doc.software() do
             doc.vendor_id(@vendor_id)
@@ -200,20 +203,17 @@ module Itunes
                     end
                   end
                 end
-              
-                # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
-                if @purchases.count > 0
-                  # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
-                  auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
-                  other_purchases = @purchases[:other_purchases]
+              end
 
-                  doc.in_app_purchases() do
-                    create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
-                    create_other_purchases_xml(doc, other_purchases) if other_purchases
-                    # @purchases.each do |val|
-                    #   create_purchase_xml(doc, val)
-                    # end
-                  end
+              # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
+              if @purchases.count > 0
+                # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
+                auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
+                other_purchases = @purchases[:other_purchases]
+
+                doc.in_app_purchases() do
+                  create_purchase_family_xml(doc, auto_renewable_purchase_family) if auto_renewable_purchase_family
+                  create_other_purchases_xml(doc, other_purchases) if other_purchases
                 end
               end
             end
