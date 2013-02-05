@@ -57,7 +57,7 @@ module Itunes
     
       def create_leaderboard_xml(doc, leaderboard, position)
         doc.leaderboard('default' => leaderboard.default, 'position' => position) do
-          doc.leaderboard_id(leaderboard.id)
+          doc.leaderboard_id(@id_prefix + leaderboard.id)
           doc.reference_name(leaderboard.name)
     
           if leaderboard.aggregate_parent_leaderboard
