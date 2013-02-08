@@ -207,7 +207,6 @@ module Itunes
 
               # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
               if @purchases.count > 0
-                # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
                 auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
                 other_purchases = @purchases[:other_purchases]
 
@@ -228,16 +227,20 @@ module Itunes
       end 
     
       def generate_itmsp
-        itmsp_dir = @vendor_id + '.itmsp'
+          itmsp_dir = @vendor_id + '.itmsp'
 
-        FileUtils.rm_rf(itmsp_dir) if Dir.exists?(itmsp_dir)
-        Dir.mkdir(itmsp_dir)
-      
-        @files_to_process.each do |file|
-          FileUtils.cp(file, itmsp_dir)
+        begin
+          FileUtils.rm_rf(itmsp_dir) if Dir.exists?(itmsp_dir)
+          Dir.mkdir(itmsp_dir)
+        
+          @files_to_process.each do |file|
+            FileUtils.cp(file, itmsp_dir)
+          end
+            
+          output[:messages] << "Successfully created iTunes metadata package: #{itmsp_dir}"
+        rescue Exception => e
+          output[:errors] << e.message
         end
-
-        output[:messages] << "Successfully created iTunes metadata package: #{itmsp_dir}"
       end
     end
   end
