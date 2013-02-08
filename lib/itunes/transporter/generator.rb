@@ -16,6 +16,7 @@ module Itunes
       attr_accessor :achievements
       attr_accessor :leaderboards
       attr_accessor :purchases
+      attr_accessor :output
     
       def initialize(options)
         @files_to_process = ['metadata.xml']
@@ -32,6 +33,7 @@ module Itunes
         @leaderboards = metadata[:leaderboards]
         @purchases = metadata[:purchases]
         @default_achievement_image = metadata[:default_achievement_image]
+        @output = { :messages => [], :errors => [] }
       end
         
       def create_achievement_xml(doc, achievement, position)
@@ -220,7 +222,9 @@ module Itunes
 
         metadata_file.close()
         
-        generate_itmsp      
+        generate_itmsp     
+
+        output 
       end 
     
       def generate_itmsp
@@ -232,6 +236,8 @@ module Itunes
         @files_to_process.each do |file|
           FileUtils.cp(file, itmsp_dir)
         end
+
+        output[:messages] << "Successfully created iTunes metadata package: #{itmsp_dir}"
       end
     end
   end

@@ -8,6 +8,9 @@ command :package do |c|
   c.option '-i FILENAME', '--input FILENAME', String, 'YAML file containing app/team values, achievement, leaderboard, and/or in-app purchase descriptions'
 
   c.action do |args, options|   
-    Itunes::Transporter::Generator.new(options).generate_metadata
+    output = Itunes::Transporter::Generator.new(options).generate_metadata
+
+    say_ok output[:messages].join("\n") if output[:messages].length > 0
+    say_error "Errors:\n #{output[:errors].join("\n")}" if output[:errors].length > 0
   end
 end
