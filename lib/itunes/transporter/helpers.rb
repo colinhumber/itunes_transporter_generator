@@ -12,6 +12,7 @@ module Itunes
           :team_id => objs['team_id'],
           :vendor_id => objs['vendor_id'],
           :id_prefix => objs['id_prefix'] || '',
+          :default_achievement_image => objs['default_achievement_image'],
           :achievements => parse_achievements(objs), 
           :leaderboards => parse_leaderboards(objs), 
           :purchases => parse_purchases(objs) 
@@ -58,7 +59,7 @@ module Itunes
           objs['leaderboards'].each do |dict|
             leaderboard = Leaderboard.new
             leaderboard.default = dict['default']
-            leaderboard.id = dict['id']
+          leaderboard.id = dict['id']
             leaderboard.name = dict['name']
             leaderboard.aggregate_parent_leaderboard = dict['aggregate_parent_leaderboard']
             leaderboard.sort_ascending = dict['sort_ascending'] || false
@@ -93,6 +94,7 @@ module Itunes
         family = Family.new
         family.name = fam['name']
         family.review_screenshot_image = fam['review_screenshot_image']
+        family.review_notes = fam['review_notes']
         family.purchases = []
         family.locales = []
 
