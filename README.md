@@ -11,7 +11,7 @@ $ gem install itunes_transporter_generator
 ## Usage
 
 ### Get familiar with the spec
-First, you'll need to be familiar with the app metadata specification (download from [here](http://bit.ly/TtHMF6)), which outlines all the possible information describing an achievement, leaderboard, or in-app purchase.
+First, you'll need to be familiar with the app metadata specification (download from [here](http://bit.ly/11DZnzK)), which outlines all the possible information describing an achievement, leaderboard, or in-app purchase.
 
 ### Describe your application metadata
 Next, you'll need to create a YAML file describing your company information and achievement, leaderboard, and/or in-app purchase details. The beauty of describing your app store assets in YAML is no hand writing XML making it understandable at a glance, and you can store your configuration in source control.
