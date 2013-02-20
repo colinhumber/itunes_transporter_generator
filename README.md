@@ -158,91 +158,91 @@ This configuration will generate the following metadata.xml:
             </locales>
           </leaderboard>
         </leaderboards>
-        <in_app_purchases>
-          <family name="Sample Product Group">
-            <locales>
-              <locale name="en">
-                <title>Sample Product Group</title>
-                <description>All your products in this sample group</description>
-                <publication_name>Sample Product Group</publication_name>
-              </locale>
-            </locales>
-            <review_screenshot>
-              <file_name>test.jpg</file_name>
-              <size>20092</size>
-              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-            </review_screenshot>
-            <review_notes/>
-            <in_app_purchase>
-              <product_id>com.samplecompany.applicationname.six_month_subscription</product_id>
-              <duration>6 Months</duration>
-              <free_trial_duration>1 Month</free_trial_duration>
-              <bonus_duration>1 Month</bonus_duration>
-              <type>auto-renewable</type>
-              <products>
-                <product>
-                  <cleared_for_sale>true</cleared_for_sale>
-                  <wholesale_price_tier>5</wholesale_price_tier>
-                </product>
-              </products>
-            </in_app_purchase>
-            <in_app_purchase>
-              <product_id>com.samplecompany.applicationname.one_year_subscription</product_id>
-              <duration>1 Year</duration>
-              <bonus_duration>2 Months</bonus_duration>
-              <type>auto-renewable</type>
-              <products>
-                <product>
-                  <cleared_for_sale>true</cleared_for_sale>
-                  <wholesale_price_tier>9</wholesale_price_tier>
-                </product>
-              </products>
-            </in_app_purchase>
-          </family>
-          <in_app_purchase>
-            <product_id>com.samplecompany.applicationname.one_hundred_dollars</product_id>
-            <reference_name>100 dollars</reference_name>
-            <type>consumable</type>
-            <products>
-              <product>
-                <cleared_for_sale/>
-              </product>
-            </products>
-            <locales>
-              <locale name="en">
-                <title>$100</title>
-                <description>An extra $100 for you</description>
-              </locale>
-            </locales>
-            <review_screenshot>
-              <file_name>test.jpg</file_name>
-              <size>20092</size>
-              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-            </review_screenshot>
-          </in_app_purchase>
-          <in_app_purchase>
-            <product_id>com.samplecompany.applicationname.new_level</product_id>
-            <reference_name>Unlocks a new level</reference_name>
-            <type>non-consumable</type>
-            <products>
-              <product>
-                <cleared_for_sale/>
-              </product>
-            </products>
-            <locales>
-              <locale name="en">
-                <title>Unlocks a new level</title>
-                <description>Try your luck at this new level</description>
-              </locale>
-            </locales>
-            <review_screenshot>
-              <file_name>test.jpg</file_name>
-              <size>20092</size>
-              <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-            </review_screenshot>
-          </in_app_purchase>
-        </in_app_purchases>
       </game_center>
+      <in_app_purchases>
+        <family name="Sample Product Group">
+          <locales>
+            <locale name="en">
+              <title>Sample Product Group</title>
+              <description>All your products in this sample group</description>
+              <publication_name>Sample Product Group</publication_name>
+            </locale>
+          </locales>
+          <review_screenshot>
+            <file_name>test.jpg</file_name>
+            <size>20092</size>
+            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+          </review_screenshot>
+          <review_notes/>
+          <in_app_purchase>
+            <product_id>com.samplecompany.applicationname.six_month_subscription</product_id>
+            <duration>6 Months</duration>
+            <free_trial_duration>1 Month</free_trial_duration>
+            <bonus_duration>1 Month</bonus_duration>
+            <type>auto-renewable</type>
+            <products>
+              <product>
+                <cleared_for_sale>true</cleared_for_sale>
+                <wholesale_price_tier>5</wholesale_price_tier>
+              </product>
+            </products>
+          </in_app_purchase>
+          <in_app_purchase>
+            <product_id>com.samplecompany.applicationname.one_year_subscription</product_id>
+            <duration>1 Year</duration>
+            <bonus_duration>2 Months</bonus_duration>
+            <type>auto-renewable</type>
+            <products>
+              <product>
+                <cleared_for_sale>true</cleared_for_sale>
+                <wholesale_price_tier>9</wholesale_price_tier>
+              </product>
+            </products>
+          </in_app_purchase>
+        </family>
+        <in_app_purchase>
+          <product_id>com.samplecompany.applicationname.one_hundred_dollars</product_id>
+          <reference_name>100 dollars</reference_name>
+          <type>consumable</type>
+          <products>
+            <product>
+              <cleared_for_sale/>
+            </product>
+          </products>
+          <locales>
+            <locale name="en">
+              <title>$100</title>
+              <description>An extra $100 for you</description>
+            </locale>
+          </locales>
+          <review_screenshot>
+            <file_name>test.jpg</file_name>
+            <size>20092</size>
+            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+          </review_screenshot>
+        </in_app_purchase>
+        <in_app_purchase>
+          <product_id>com.samplecompany.applicationname.new_level</product_id>
+          <reference_name>Unlocks a new level</reference_name>
+          <type>non-consumable</type>
+          <products>
+            <product>
+              <cleared_for_sale/>
+            </product>
+          </products>
+          <locales>
+            <locale name="en">
+              <title>Unlocks a new level</title>
+              <description>Try your luck at this new level</description>
+            </locale>
+          </locales>
+          <review_screenshot>
+            <file_name>test.jpg</file_name>
+            <size>20092</size>
+            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+          </review_screenshot>
+        </in_app_purchase>
+      </in_app_purchases>
     </software_metadata>
   </software>
 </package>

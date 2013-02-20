@@ -16,6 +16,7 @@ module Itunes
       attr_accessor :achievements
       attr_accessor :leaderboards
       attr_accessor :purchases
+      attr_accessor :output
     
       def initialize(options)
         @files_to_process = ['metadata.xml']
@@ -27,10 +28,12 @@ module Itunes
         @id_prefix = metadata[:id_prefix]
         @provider = metadata[:provider]
         @team_id = metadata[:team_id]
-        @vendor_id = metadata[:vendor_id]
+        @vendor_id = metadata[:vendor_id].to_s
         @achievements = metadata[:achievements]
         @leaderboards = metadata[:leaderboards]
         @purchases = metadata[:purchases]
+        @default_achievement_image = metadata[:default_achievement_image]
+        @output = { :messages => [], :errors => [] }
       end
         
       def create_achievement_xml(doc, achievement, position)
@@ -44,10 +47,10 @@ module Itunes
             achievement.locales.each do |locale|
               doc.locale('name' => locale.name) do
                 doc.title(locale.title)
-                doc.before_earned_description(locale.before_earned_description)
+              doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
                 doc.achievement_after_earned_image() do
-                  create_screenshot_xml(doc, locale.achievement_after_earned_image)
+                  create_screenshot_xml(doc, locale.achievement_after_earned_image || @default_achievement_image)
                 end
               end
             end
@@ -177,11 +180,8 @@ module Itunes
         doc = Builder::XmlMarkup.new(:target => metadata_file, :indent => 2)
         doc.instruct!(:xml, :version => '1.0', :encoding => 'UTF-8')
         doc.package('xmlns' => 'http://apple.com/itunes/importer', 'version' => 'software5.0') do
-          if @provider && @provider.length > 0
-            doc.provider(@provider)
-          end
-
-          doc.team_id(@team_id)
+          doc.provider(@provider) if @provider
+          doc.team_id(@team_id) if @team_id
           doc.software() do
             doc.vendor_id(@vendor_id)
             doc.software_metadata() do
@@ -207,7 +207,6 @@ module Itunes
 
               # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
               if @purchases.count > 0
-                # auto_renewable_purchases, other_purchases = @purchases.partition { |p| p.type == 'auto-renewable' }
                 auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
                 other_purchases = @purchases[:other_purchases]
 
@@ -222,17 +221,25 @@ module Itunes
 
         metadata_file.close()
         
-        generate_itmsp      
+        generate_itmsp     
+
+        output 
       end 
     
       def generate_itmsp
-        itmsp_dir = @vendor_id + '.itmsp'
+          itmsp_dir = @vendor_id + '.itmsp'
 
-        FileUtils.rm_rf(itmsp_dir) if Dir.exists?(itmsp_dir)
-        Dir.mkdir(itmsp_dir)
-      
-        @files_to_process.each do |file|
-          FileUtils.cp(file, itmsp_dir)
+        begin
+          FileUtils.rm_rf(itmsp_dir) if Dir.exists?(itmsp_dir)
+          Dir.mkdir(itmsp_dir)
+        
+          @files_to_process.each do |file|
+            FileUtils.cp(file, itmsp_dir)
+          end
+            
+          output[:messages] << "Successfully created iTunes metadata package: #{itmsp_dir}"
+        rescue Exception => e
+          output[:errors] << e.message
         end
       end
     end
