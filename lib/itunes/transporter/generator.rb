@@ -151,7 +151,7 @@ module Itunes
             create_screenshot_xml(doc, family.review_screenshot_image)  
           end
 
-          doc.review_notes(family.review_notes)
+          doc.review_notes(family.review_notes) if family.review_notes
 
           family.purchases.each do |purchase|
             create_in_app_purchase_xml(doc, purchase)
