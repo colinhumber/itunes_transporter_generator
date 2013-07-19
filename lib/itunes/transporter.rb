@@ -1,6 +1,6 @@
 module Itunes
   module Transporter
-    class Achievement < Struct.new(:id, :name, :points, :hidden, :reusable, :should_remove, :locales) 
+    class Achievement < Struct.new(:id, :name, :points, :hidden, :reusable, :should_remove, :locales)
 		  def to_s
 			  "#{self.id} #{self.name}"
 		  end
@@ -51,6 +51,24 @@ module Itunes
     class PurchaseLocale < Struct.new(:name, :title, :description, :publication_name)
       def to_s
         "Name: #{self.name} Title: #{self.title}"
+      end
+    end
+
+    class Version < Struct.new(:name, :locales)
+      def to_s
+        self.name
+      end
+    end
+
+    class VersionLocale < Struct.new(:name, :title, :description, :keywords, :version_whats_new, :software_url, :privacy_url, :support_url, :screenshots)
+      def to_s
+        "#{self.name} #{self.title}"
+      end
+    end
+
+    class VersionScreenshot < Struct.new(:display_target, :file_name)
+      def to_s
+        "#{self.display_target} - #{self.file_name}"
       end
     end
   end
