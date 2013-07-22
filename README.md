@@ -34,6 +34,23 @@ provider: SampleCompany # optional if team_id is supplied
 team_id: ABCDE12345 # optional if provider is supplied
 vendor_id: sample sku # the application's SKU as defined in iTunes Connect 
 id_prefix: com.samplecompany.applicationname. # if supplied, this will be prefixed to achievement, leaderboard, and in-app purchase IDs
+versions:
+  - name: 1.1.3.1
+    locales:
+      - name: en-US
+        title: sampleApp
+        description: Description of sampleApp.
+        keywords:
+          - Sample
+          - App
+        version_whats_new: Version Whats New.
+        software_url: 'http://example.com'
+        privacy_url: 'http://example.com'
+        support_url: 'http://example.com'
+        screenshots:
+          - display_target: 'iOS-3.5-in'
+            file_name: 'test.jpg'
+
 achievements: # the order in which achievements are defined will be the order in which they appear in Game Center
 - id: first_achievement
   name: First Achievement
@@ -116,6 +133,31 @@ This configuration will generate the following metadata.xml:
   <software>
     <vendor_id>sample sku</vendor_id>
     <software_metadata>
+      <versions>
+        <version string="1.1.3.1">
+          <locales>
+            <locale name="en-US">
+              <title>sampleApp</title>
+              <description>Description of sampleApp.</description>
+              <keywords>
+                <keyword>Sample</keyword>
+                <keyword>App</keyword>
+              </keywords>
+              <version_whats_new>Version Whats New.</version_whats_new>
+              <software_url>http://example.com</software_url>
+              <privacy_url>http://example.com</privacy_url>
+              <support_url>http://example.com</support_url>
+              <software_screenshots>
+                <software_screenshot display_target="iOS-3.5-in" position="1">
+                  <file_name>test.jpg</file_name>
+                  <size>20092</size>
+                  <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+                </software_screenshot>
+              </software_screenshots>
+            </locale>
+          </locales>
+        </version>
+      </versions>
       <game_center>
         <achievements>
           <achievement position="1">
@@ -140,7 +182,7 @@ This configuration will generate the following metadata.xml:
         </achievements>
         <leaderboards>
           <leaderboard default="true" position="1">
-            <leaderboard_id/>
+            <leaderboard_id>com.samplecompany.applicationname.top_scores</leaderboard_id>
             <reference_name>Top Scores</reference_name>
             <sort_ascending>false</sort_ascending>
             <locales>
@@ -206,7 +248,8 @@ This configuration will generate the following metadata.xml:
           <type>consumable</type>
           <products>
             <product>
-              <cleared_for_sale/>
+              <cleared_for_sale>true</cleared_for_sale>
+              <wholesale_price_tier>1</wholesale_price_tier>
             </product>
           </products>
           <locales>
@@ -227,7 +270,14 @@ This configuration will generate the following metadata.xml:
           <type>non-consumable</type>
           <products>
             <product>
-              <cleared_for_sale/>
+              <cleared_for_sale>true</cleared_for_sale>
+              <intervals>
+                <interval>
+                  <start_date>2013-01-31</start_date>
+                  <end_date>2013-02-28</end_date>
+                  <wholesale_price_tier>3</wholesale_price_tier>
+                </interval>
+              </intervals>
             </product>
           </products>
           <locales>
