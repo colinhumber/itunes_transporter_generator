@@ -118,16 +118,34 @@ purchases:
         - start_date: 2013-01-31
           end_date: 2013-02-28
           wholesale_price_tier: 3
+        - start_date: 2013-03-01
+          end_date: 2013-05-15
+          wholesale_price_tier: 3
       locales:
         - name: en
           title: Unlocks a new level
           description: Try your luck at this new level
+    - product_id: another_level
+      reference_name: Unlocks another new level
+      type: non-consumable
+      review_screenshot_image: test.jpg
+      cleared_for_sale: true
+      intervals:
+        - end_date: 2013-08-13
+          wholesale_price_tier: 3
+        - start_date: 2013-08-14
+          wholesale_price_tier: 3
+      locales:
+        - name: en
+          title: Unlocks a new level
+          description: Try your luck at this new level
+
 ```
 
 This configuration will generate the following metadata.xml:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://apple.com/itunes/importer" version="software5.0">
+<package xmlns="http://apple.com/itunes/importer" version="software5.1">
   <provider>SampleCompany</provider>
   <team_id>ABCDE12345</team_id>
   <software>
@@ -275,6 +293,37 @@ This configuration will generate the following metadata.xml:
                 <interval>
                   <start_date>2013-01-31</start_date>
                   <end_date>2013-02-28</end_date>
+                  <wholesale_price_tier>3</wholesale_price_tier>
+                </interval>
+              </intervals>
+            </product>
+          </products>
+          <locales>
+            <locale name="en">
+              <title>Unlocks a new level</title>
+              <description>Try your luck at this new level</description>
+            </locale>
+          </locales>
+          <review_screenshot>
+            <file_name>test.jpg</file_name>
+            <size>20092</size>
+            <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+          </review_screenshot>
+        </in_app_purchase>
+        <in_app_purchase>
+          <product_id>com.samplecompany.applicationname.another_level</product_id>
+          <reference_name>Unlocks another new level</reference_name>
+          <type>non-consumable</type>
+          <products>
+            <product>
+              <cleared_for_sale>true</cleared_for_sale>
+              <intervals>
+                <interval>
+                  <end_date>2013-02-28</end_date>
+                  <wholesale_price_tier>3</wholesale_price_tier>
+                </interval>
+                <interval>
+                  <start_date>2013-08-14</start_date>
                   <wholesale_price_tier>3</wholesale_price_tier>
                 </interval>
               </intervals>
