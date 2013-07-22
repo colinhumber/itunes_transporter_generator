@@ -1,3 +1,3 @@
 module Itunes
-  VERSION = '0.39'
+  VERSION = '0.4'
 end 
