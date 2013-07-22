@@ -144,8 +144,14 @@ module Itunes
                 doc.intervals() do
                   product.intervals.each do |interval|
                     doc.interval() do
-                      doc.start_date(interval.start_date) if interval.start_date
-                      doc.end_date(interval.end_date) if interval.end_date
+                      if (interval.start_date)
+                        doc.start_date(interval.start_date) if interval.start_date
+                      end
+
+                      if (interval.end_date)
+                        doc.end_date(interval.end_date) if interval.end_date
+                      end
+
                       doc.wholesale_price_tier(interval.wholesale_price_tier)
                     end
                   end
@@ -214,13 +220,12 @@ module Itunes
 
         doc = Builder::XmlMarkup.new(:target => metadata_file, :indent => 2)
         doc.instruct!(:xml, :version => '1.0', :encoding => 'UTF-8')
-        doc.package('xmlns' => 'http://apple.com/itunes/importer', 'version' => 'software5.0') do
+        doc.package('xmlns' => 'http://apple.com/itunes/importer', 'version' => 'software5.1') do
           doc.provider(@provider) if @provider
           doc.team_id(@team_id) if @team_id
           doc.software() do
             doc.vendor_id(@vendor_id)
             doc.software_metadata() do
-
               if @versions.count > 0
                 doc.versions() do
                   @versions.each do |version|
