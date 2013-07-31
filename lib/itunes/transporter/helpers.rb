@@ -42,12 +42,24 @@ module Itunes
               locale.support_url = loc['support_url']
               locale.screenshots = []
 
+              loc['screenshots'].sort! { |a, b| a['display_target'].downcase <=> b['display_target'].downcase }
+
+              current_display_target = ''
+              current_position = 1
+
               loc['screenshots'].each do |scrshot|
+                if (current_display_target != scrshot['display_target'])
+                  current_position = 1
+                  current_display_target = scrshot['display_target']
+                end
+
                 screenshot = VersionScreenshot.new
-                screenshot.display_target = scrshot['display_target']
+                screenshot.display_target = current_display_target
                 screenshot.file_name = scrshot['file_name']
+                screenshot.position = current_position
 
                 locale.screenshots << screenshot
+                current_position = current_position + 1
               end
 
               version.locales << locale

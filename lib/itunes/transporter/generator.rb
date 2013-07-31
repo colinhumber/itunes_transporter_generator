@@ -59,8 +59,8 @@ module Itunes
                 doc.support_url(locale.support_url)
 
                 doc.software_screenshots() do
-                  locale.screenshots.each_with_index do |screenshot, index|
-                    doc.software_screenshot('display_target' => screenshot.display_target, 'position' => index + 1) do
+                  locale.screenshots.each do |screenshot|
+                    doc.software_screenshot('display_target' => screenshot.display_target, 'position' => screenshot.position) do
                       create_screenshot_xml(doc, screenshot.file_name)
                     end
                   end

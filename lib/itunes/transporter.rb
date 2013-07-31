@@ -66,9 +66,9 @@ module Itunes
       end
     end
 
-    class VersionScreenshot < Struct.new(:display_target, :file_name)
+    class VersionScreenshot < Struct.new(:display_target, :file_name, :position)
       def to_s
-        "#{self.display_target} - #{self.file_name}"
+        "(#{self.position}) #{self.display_target} - #{self.file_name}"
       end
     end
   end
