@@ -45,20 +45,25 @@ module Itunes
             version.locales.each do |locale|
               doc.locale('name' => locale.name) do
                 doc.title(locale.title)
-                doc.description() do
-                  doc.cdata!(locale.description)
+
+                if locale.description
+                  doc.description() do
+                    doc.cdata!(locale.description)
+                  end
                 end
                 
-                doc.keywords() do
-                  locale.keywords.each do |keyword|
-                    doc.keyword(keyword)
+                if locale.keywords
+                  doc.keywords() do
+                    locale.keywords.each do |keyword|
+                      doc.keyword(keyword)
+                    end
                   end
                 end
 
-                doc.version_whats_new(locale.version_whats_new)
-                doc.software_url(locale.software_url)
-                doc.privacy_url(locale.privacy_url)
-                doc.support_url(locale.support_url)
+                doc.version_whats_new(locale.version_whats_new) if locale.version_whats_new
+                doc.software_url(locale.software_url)  if locale.software_url
+                doc.privacy_url(locale.privacy_url) if locale.privacy_url
+                doc.support_url(locale.support_url) if locale.support_url
 
                 doc.software_screenshots() do
                   locale.screenshots.each do |screenshot|
@@ -236,26 +241,27 @@ module Itunes
                 end
               end
 
-              doc.game_center() do
-                # generate XML for all achievements
-                if @achievements.count > 0
-                  doc.achievements() do
-                    @achievements.each_with_index do |val, index|
-                      create_achievement_xml(doc, val, index + 1)
+              if @achievements.count > 0 || @leaderboards.count > 0
+                doc.game_center() do
+                  # generate XML for all achievements
+                  if @achievements.count > 0
+                    doc.achievements() do
+                      @achievements.each_with_index do |val, index|
+                        create_achievement_xml(doc, val, index + 1)
+                      end
                     end
                   end
-                end
 
-                # generate XML for all leaderboards
-                if @leaderboards.count > 0
-                  doc.leaderboards() do
-                    @leaderboards.each_with_index do |val, index|
-                      create_leaderboard_xml(doc, val, index + 1)
+                  # generate XML for all leaderboards
+                  if @leaderboards.count > 0
+                    doc.leaderboards() do
+                      @leaderboards.each_with_index do |val, index|
+                        create_leaderboard_xml(doc, val, index + 1)
+                      end
                     end
                   end
                 end
               end
-
               # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
               if @purchases.count > 0
                 auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
