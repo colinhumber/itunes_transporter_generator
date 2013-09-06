@@ -45,8 +45,10 @@ module Itunes
             version.locales.each do |locale|
               doc.locale('name' => locale.name) do
                 doc.title(locale.title)
-                doc.description(locale.description)
-
+                doc.description() do
+                  doc.cdata!(locale.description)
+                end
+                
                 doc.keywords() do
                   locale.keywords.each do |keyword|
                     doc.keyword(keyword)

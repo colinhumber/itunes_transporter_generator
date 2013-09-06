@@ -7,7 +7,10 @@ versions:
     locales:
       - name: en-US
         title: sampleApp
-        description: Description of sampleApp.
+        description: |
+          Description of sampleApp. This description
+          spans multiple lines using the pipe
+          characters. All newlines are preserved.
         keywords:
           - Sample
           - App

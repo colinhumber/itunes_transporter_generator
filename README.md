@@ -29,6 +29,8 @@ You can now upload your .itmsp package to iTunes Connect using the Transporter t
 ## Sample Config file
 Below is a sample configuration file describing an achievement, leaderboard, and in-app purchase. The specific metadata required for each item type is fully described in the [App Metadata Specification guide](http://bit.ly/TtHMF6)
 
+IMPORTANT: please note the syntax for multiline descriptions. This is the literal syntax for YAML used for multiline strings (http://symfony.com/doc/current/components/yaml/yaml_format.html). Also note the indentation.
+
 ```yaml
 provider: SampleCompany # optional if team_id is supplied
 team_id: ABCDE12345 # optional if provider is supplied
@@ -39,7 +41,10 @@ versions:
     locales:
       - name: en-US
         title: sampleApp
-        description: Description of sampleApp.
+        description: |
+          Description of sampleApp. This description
+          spans multiple lines using the pipe
+          characters. All newlines are preserved.
         keywords:
           - Sample
           - App
@@ -156,7 +161,12 @@ This configuration will generate the following metadata.xml:
           <locales>
             <locale name="en-US">
               <title>sampleApp</title>
-              <description>Description of sampleApp.</description>
+              <description>
+                <![CDATA[Description of sampleApp. This description
+spans multiple lines using the pipe
+characters. All newlines are preserved.
+]]>
+              </description>
               <keywords>
                 <keyword>Sample</keyword>
                 <keyword>App</keyword>
@@ -167,6 +177,21 @@ This configuration will generate the following metadata.xml:
               <support_url>http://example.com</support_url>
               <software_screenshots>
                 <software_screenshot display_target="iOS-3.5-in" position="1">
+                  <file_name>test.jpg</file_name>
+                  <size>20092</size>
+                  <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+                </software_screenshot>
+                <software_screenshot display_target="iOS-3.5-in" position="2">
+                  <file_name>test.jpg</file_name>
+                  <size>20092</size>
+                  <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+                </software_screenshot>
+                <software_screenshot display_target="iOS-iPad" position="1">
+                  <file_name>test.jpg</file_name>
+                  <size>20092</size>
+                  <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
+                </software_screenshot>
+                <software_screenshot display_target="iOS-iPad" position="2">
                   <file_name>test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
@@ -295,6 +320,11 @@ This configuration will generate the following metadata.xml:
                   <end_date>2013-02-28</end_date>
                   <wholesale_price_tier>3</wholesale_price_tier>
                 </interval>
+                <interval>
+                  <start_date>2013-03-01</start_date>
+                  <end_date>2013-05-15</end_date>
+                  <wholesale_price_tier>3</wholesale_price_tier>
+                </interval>
               </intervals>
             </product>
           </products>
@@ -319,7 +349,7 @@ This configuration will generate the following metadata.xml:
               <cleared_for_sale>true</cleared_for_sale>
               <intervals>
                 <interval>
-                  <end_date>2013-02-28</end_date>
+                  <end_date>2013-08-13</end_date>
                   <wholesale_price_tier>3</wholesale_price_tier>
                 </interval>
                 <interval>
@@ -345,6 +375,7 @@ This configuration will generate the following metadata.xml:
     </software_metadata>
   </software>
 </package>
+
 
 ```
 

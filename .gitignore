@@ -20,3 +20,5 @@ doc/
 .DS_Store
 Gemfile.lock
 
+# Sublime project
+.sublime*
