@@ -9,6 +9,7 @@ module Itunes
       include Itunes::Transporter::Helpers
 
       attr_reader :files_to_process
+      attr_reader :images_to_process
       attr_accessor :id_prefix
       attr_accessor :provider
       attr_accessor :team_id
@@ -21,6 +22,7 @@ module Itunes
 
       def initialize(options)
         @files_to_process = ['metadata.xml']
+        @images_to_process = []
 
         config_file = options.i || options.input
 
@@ -45,25 +47,30 @@ module Itunes
             version.locales.each do |locale|
               doc.locale('name' => locale.name) do
                 doc.title(locale.title)
-                doc.description() do
-                  doc.cdata!(locale.description)
+
+                if locale.description
+                  doc.description() do
+                    doc.cdata!(locale.description)
+                  end
                 end
                 
-                doc.keywords() do
-                  locale.keywords.each do |keyword|
-                    doc.keyword(keyword)
+                if locale.keywords
+                  doc.keywords() do
+                    locale.keywords.each do |keyword|
+                      doc.keyword(keyword)
+                    end
                   end
                 end
 
-                doc.version_whats_new(locale.version_whats_new)
-                doc.software_url(locale.software_url)
-                doc.privacy_url(locale.privacy_url)
-                doc.support_url(locale.support_url)
+                doc.version_whats_new(locale.version_whats_new) if locale.version_whats_new
+                doc.software_url(locale.software_url)  if locale.software_url
+                doc.privacy_url(locale.privacy_url) if locale.privacy_url
+                doc.support_url(locale.support_url) if locale.support_url
 
                 doc.software_screenshots() do
                   locale.screenshots.each do |screenshot|
                     doc.software_screenshot('display_target' => screenshot.display_target, 'position' => screenshot.position) do
-                      create_screenshot_xml(doc, screenshot.file_name)
+                      create_image_xml(doc, screenshot)
                     end
                   end
                 end
@@ -87,7 +94,8 @@ module Itunes
               doc.before_earned_description(locale.before_earned_description)
                 doc.after_earned_description(locale.after_earned_description)
                 doc.achievement_after_earned_image() do
-                  create_screenshot_xml(doc, locale.achievement_after_earned_image || @default_achievement_image)
+                  image = AchievementImage.new(achievement.id,locale.achievement_after_earned_image || @default_achievement_image)
+                  create_image_xml(doc, image)
                 end
               end
             end
@@ -119,7 +127,8 @@ module Itunes
 
                 doc.formatter_type(locale.formatter_type)
                 doc.leaderboard_image() do
-                  create_screenshot_xml(doc, locale.leaderboard_image)
+                  image = LeaderboardImage.new("#{leaderboard.id}_#{locale.name}", locale.leaderboard_image)
+                  create_image_xml(doc, image)
                 end
               end
             end
@@ -169,7 +178,8 @@ module Itunes
           end if purchase.locales.count > 0
 
           doc.review_screenshot() do
-            create_screenshot_xml(doc, purchase.review_screenshot_image)
+            screenshot = IAPReviewImage.new(purchase.product_id, purchase.review_screenshot_image)
+            create_image_xml(doc, screenshot)
           end if purchase.review_screenshot_image
         end
       end
@@ -191,7 +201,8 @@ module Itunes
           end
 
           doc.review_screenshot() do
-            create_screenshot_xml(doc, family.review_screenshot_image)
+            screenshot = IAPFamilyReviewImage.new(family.name, family.review_screenshot_image)
+            create_image_xml(doc, screenshot)
           end
 
           doc.review_notes(family.review_notes)
@@ -202,12 +213,12 @@ module Itunes
         end
       end
 
-      def create_screenshot_xml(doc, file_name)
-        image_path = Dir.pwd + "/#{file_name}"
-        @files_to_process << image_path
+      def create_image_xml(doc, image)
+        image_path = File.join(Dir.pwd,image.file_name)
+        @images_to_process << image
 
-        doc.file_name(file_name)
-        doc.size(File.size?(image_path))
+        doc.file_name(image.normalized_filename)
+        doc.size(File.size?(image.file_name))
         doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')
       end
 
@@ -236,26 +247,27 @@ module Itunes
                 end
               end
 
-              doc.game_center() do
-                # generate XML for all achievements
-                if @achievements.count > 0
-                  doc.achievements() do
-                    @achievements.each_with_index do |val, index|
-                      create_achievement_xml(doc, val, index + 1)
+              if @achievements.count > 0 || @leaderboards.count > 0
+                doc.game_center() do
+                  # generate XML for all achievements
+                  if @achievements.count > 0
+                    doc.achievements() do
+                      @achievements.each_with_index do |val, index|
+                        create_achievement_xml(doc, val, index + 1)
+                      end
                     end
                   end
-                end
 
-                # generate XML for all leaderboards
-                if @leaderboards.count > 0
-                  doc.leaderboards() do
-                    @leaderboards.each_with_index do |val, index|
-                      create_leaderboard_xml(doc, val, index + 1)
+                  # generate XML for all leaderboards
+                  if @leaderboards.count > 0
+                    doc.leaderboards() do
+                      @leaderboards.each_with_index do |val, index|
+                        create_leaderboard_xml(doc, val, index + 1)
+                      end
                     end
                   end
                 end
               end
-
               # generate XML for all auto-renewable subscriptions and other IAPs (consumable, non-consumable, subscription, free-subscription)
               if @purchases.count > 0
                 auto_renewable_purchase_family = @purchases[:auto_renewable_purchase_family]
@@ -286,6 +298,10 @@ module Itunes
 
           @files_to_process.each do |file|
             FileUtils.cp(file, itmsp_dir)
+          end
+
+          @images_to_process.each do |image|
+            FileUtils.cp(image.file_name, File.join(itmsp_dir,image.normalized_filename))
           end
 
           output[:messages] << "Successfully created iTunes metadata package: #{itmsp_dir}"

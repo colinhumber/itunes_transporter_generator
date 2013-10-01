@@ -66,9 +66,75 @@ module Itunes
       end
     end
 
+    module MetadataImage
+      def normalized_source_filename
+        File.basename(self.file_name).tr('/: ','_')
+      end
+
+      def friendly_filename(filename)
+        filename.gsub(/[^\w\s_-]+/, '')
+        .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
+        .gsub(/\s+/, '_')
+      end
+    end
+
     class VersionScreenshot < Struct.new(:display_target, :file_name, :position)
+      include MetadataImage
+
       def to_s
         "(#{self.position}) #{self.display_target} - #{self.file_name}"
+      end
+
+      def normalized_filename
+        "#{self.position}_#{self.display_target}_#{normalized_source_filename}"
+      end
+    end
+
+    class AchievementImage < Struct.new(:id, :file_name)
+      include MetadataImage
+
+      def to_s
+        "achievement #{self.id} - #{self.file_name}"
+      end
+
+      def normalized_filename
+        "achievement_#{friendly_filename(id)}_#{normalized_source_filename}"
+      end
+    end
+
+    class LeaderboardImage < Struct.new(:id, :file_name)
+      include MetadataImage
+
+      def to_s
+        "leaderboard #{self.id} - #{self.file_name}"
+      end
+
+      def normalized_filename
+        "leaderboard_#{friendly_filename(id)}_#{normalized_source_filename}"
+      end
+    end
+
+    class IAPReviewImage < Struct.new(:id, :file_name)
+      include MetadataImage
+
+      def to_s
+        "iap #{self.id} - #{self.file_name}"
+      end
+
+      def normalized_filename
+        "iap_#{friendly_filename(id)}_#{normalized_source_filename}"
+      end
+    end
+
+    class IAPFamilyReviewImage < Struct.new(:name, :file_name)
+      include MetadataImage
+
+      def to_s
+        "iap #{self.name} - #{self.file_name}"
+      end
+
+      def normalized_filename
+        "iap_#{friendly_filename(name)}_#{normalized_source_filename}"
       end
     end
   end
