@@ -4,6 +4,9 @@ require 'itunes/transporter'
 module Itunes
   module Transporter
     module Helpers
+
+      KNOWN_DISPLAY_TARGETS = {'ipad' => 'iOS-iPad', 'iphone_3.5in' => 'iOS-3.5-in', 'iphone_4in' =>'iOS-4-in'}
+
       def metadata_from_yaml(yaml_file)
         objs = YAML.load_file(Dir.pwd + "/#{yaml_file}")
 
@@ -42,24 +45,15 @@ module Itunes
               locale.support_url = loc['support_url']
               locale.screenshots = []
 
-              loc['screenshots'].sort! { |a, b| a['display_target'].downcase <=> b['display_target'].downcase }
-
-              current_display_target = ''
-              current_position = 1
-
-              loc['screenshots'].each do |scrshot|
-                if (current_display_target != scrshot['display_target'])
-                  current_position = 1
-                  current_display_target = scrshot['display_target']
+              loc['screenshots'].each do |target, target_screenshots|
+                raise "Unknown display target for screenshot" unless KNOWN_DISPLAY_TARGETS.keys.include?(target)
+                target_screenshots.each_with_index do |scrshot, index|
+                  screenshot = VersionScreenshot.new
+                  screenshot.display_target = KNOWN_DISPLAY_TARGETS[target]
+                  screenshot.file_name = scrshot
+                  screenshot.position = index+1
+                  locale.screenshots << screenshot
                 end
-
-                screenshot = VersionScreenshot.new
-                screenshot.display_target = current_display_target
-                screenshot.file_name = scrshot['file_name']
-                screenshot.position = current_position
-
-                locale.screenshots << screenshot
-                current_position = current_position + 1
               end
 
               version.locales << locale

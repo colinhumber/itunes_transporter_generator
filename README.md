@@ -53,8 +53,8 @@ versions:
         privacy_url: 'http://example.com'
         support_url: 'http://example.com'
         screenshots:
-          - display_target: 'iOS-3.5-in'
-            file_name: 'test.jpg'
+          iphone_4in:
+          -  'test.jpg'
 
 achievements: # the order in which achievements are defined will be the order in which they appear in Game Center
 - id: first_achievement
