@@ -7,14 +7,18 @@ versions:
     locales:
       - name: en-US
         title: sampleApp
-        description: |
+        description: |+
           Description of sampleApp. This description
           spans multiple lines using the pipe
           characters. All newlines are preserved.
         keywords:
           - Sample
           - App
-        version_whats_new: Version Whats New.
+        version_whats_new: |+
+          Version Whats New. extra
+          line
+          breaks
+          
         software_url: 'http://example.com'
         privacy_url: 'http://example.com'
         support_url: 'http://example.com'

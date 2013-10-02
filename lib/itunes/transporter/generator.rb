@@ -62,7 +62,12 @@ module Itunes
                   end
                 end
 
-                doc.version_whats_new(locale.version_whats_new) if locale.version_whats_new
+                if locale.version_whats_new
+                  doc.version_whats_new() do
+                    doc.cdata!(locale.version_whats_new)
+                  end
+                end
+                # doc.version_whats_new(locale.version_whats_new) if locale.version_whats_new
                 doc.software_url(locale.software_url)  if locale.software_url
                 doc.privacy_url(locale.privacy_url) if locale.privacy_url
                 doc.support_url(locale.support_url) if locale.support_url

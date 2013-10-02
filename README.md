@@ -29,7 +29,7 @@ You can now upload your .itmsp package to iTunes Connect using the Transporter t
 ## Sample Config file
 Below is a sample configuration file describing an achievement, leaderboard, and in-app purchase. The specific metadata required for each item type is fully described in the [App Metadata Specification guide](http://bit.ly/TtHMF6)
 
-IMPORTANT: please note the syntax for multiline descriptions. This is the literal syntax for YAML used for multiline strings (http://symfony.com/doc/current/components/yaml/yaml_format.html). Also note the indentation.
+IMPORTANT: please note the syntax for multiline descriptions with extra line breaks. This is the literal syntax for [YAML used for multiline strings](http://www.yaml.org/YAML_for_ruby.html#extra_trailing_newlines_with_spaces). Also note the indentation.
 
 ```yaml
 provider: SampleCompany # optional if team_id is supplied
@@ -41,21 +41,28 @@ versions:
     locales:
       - name: en-US
         title: sampleApp
-        description: |
+        description: |+
           Description of sampleApp. This description
           spans multiple lines using the pipe
           characters. All newlines are preserved.
         keywords:
           - Sample
           - App
-        version_whats_new: Version Whats New.
+        version_whats_new: |+
+          Version Whats New. extra
+          line
+          breaks
+          
         software_url: 'http://example.com'
         privacy_url: 'http://example.com'
         support_url: 'http://example.com'
         screenshots:
           iphone_4in:
-          -  'test.jpg'
-
+            - 'test.jpg'
+          iphone_3.5in:
+            - 'test.jpg'
+          ipad:
+            - 'test.jpg'
 achievements: # the order in which achievements are defined will be the order in which they appear in Game Center
 - id: first_achievement
   name: First Achievement
@@ -144,7 +151,6 @@ purchases:
         - name: en
           title: Unlocks a new level
           description: Try your luck at this new level
-
 ```
 
 This configuration will generate the following metadata.xml:
@@ -171,28 +177,29 @@ characters. All newlines are preserved.
                 <keyword>Sample</keyword>
                 <keyword>App</keyword>
               </keywords>
-              <version_whats_new>Version Whats New.</version_whats_new>
+              <version_whats_new>
+                <![CDATA[Version Whats New. extra
+line
+breaks
+
+]]>
+              </version_whats_new>
               <software_url>http://example.com</software_url>
               <privacy_url>http://example.com</privacy_url>
               <support_url>http://example.com</support_url>
               <software_screenshots>
-                <software_screenshot display_target="iOS-3.5-in" position="1">
-                  <file_name>test.jpg</file_name>
+                <software_screenshot display_target="iOS-4-in" position="1">
+                  <file_name>1_iOS-4-in_test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
                 </software_screenshot>
-                <software_screenshot display_target="iOS-3.5-in" position="2">
-                  <file_name>test.jpg</file_name>
+                <software_screenshot display_target="iOS-3.5-in" position="1">
+                  <file_name>1_iOS-3.5-in_test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
                 </software_screenshot>
                 <software_screenshot display_target="iOS-iPad" position="1">
-                  <file_name>test.jpg</file_name>
-                  <size>20092</size>
-                  <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
-                </software_screenshot>
-                <software_screenshot display_target="iOS-iPad" position="2">
-                  <file_name>test.jpg</file_name>
+                  <file_name>1_iOS-iPad_test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
                 </software_screenshot>
@@ -215,7 +222,7 @@ characters. All newlines are preserved.
                 <before_earned_description>Complete a task</before_earned_description>
                 <after_earned_description>Completed a task</after_earned_description>
                 <achievement_after_earned_image>
-                  <file_name>test.jpg</file_name>
+                  <file_name>achievement_first_achievement_test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
                 </achievement_after_earned_image>
@@ -235,7 +242,7 @@ characters. All newlines are preserved.
                 <formatter_suffix_singular> Point</formatter_suffix_singular>
                 <formatter_type>INTEGER_COMMA_SEPARATOR</formatter_type>
                 <leaderboard_image>
-                  <file_name>test.jpg</file_name>
+                  <file_name>leaderboard_top_scores_en_test.jpg</file_name>
                   <size>20092</size>
                   <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
                 </leaderboard_image>
@@ -254,7 +261,7 @@ characters. All newlines are preserved.
             </locale>
           </locales>
           <review_screenshot>
-            <file_name>test.jpg</file_name>
+            <file_name>iap_Sample_Product_Group_test.jpg</file_name>
             <size>20092</size>
             <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
           </review_screenshot>
@@ -302,7 +309,7 @@ characters. All newlines are preserved.
             </locale>
           </locales>
           <review_screenshot>
-            <file_name>test.jpg</file_name>
+            <file_name>iap_one_hundred_dollars_test.jpg</file_name>
             <size>20092</size>
             <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
           </review_screenshot>
@@ -335,7 +342,7 @@ characters. All newlines are preserved.
             </locale>
           </locales>
           <review_screenshot>
-            <file_name>test.jpg</file_name>
+            <file_name>iap_new_level_test.jpg</file_name>
             <size>20092</size>
             <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
           </review_screenshot>
@@ -366,7 +373,7 @@ characters. All newlines are preserved.
             </locale>
           </locales>
           <review_screenshot>
-            <file_name>test.jpg</file_name>
+            <file_name>iap_another_level_test.jpg</file_name>
             <size>20092</size>
             <checksum type="md5">ff5bd97a5f40bb75a84884589ecbfc42</checksum>
           </review_screenshot>
@@ -375,8 +382,6 @@ characters. All newlines are preserved.
     </software_metadata>
   </software>
 </package>
-
-
 ```
 
 ## Todo
