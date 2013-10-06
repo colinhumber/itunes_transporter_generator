@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Colin Humber"]
   s.email       = 'colinhumber@gmail.com'
   s.homepage    = 'https://github.com/colinhumber/itunes_transporter_generator'
+  s.license     = 'MIT'
   
   s.add_dependency 'builder', '~>3.0.0'
   s.add_dependency 'commander', '~> 4.1.3'
