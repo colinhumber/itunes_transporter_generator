@@ -52,6 +52,7 @@ module Itunes
                   screenshot.display_target = KNOWN_DISPLAY_TARGETS[target]
                   screenshot.file_name = scrshot
                   screenshot.position = index+1
+                  screenshot.locale_name = locale.name
                   locale.screenshots << screenshot
                 end
               end
