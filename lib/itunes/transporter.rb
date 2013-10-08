@@ -78,15 +78,15 @@ module Itunes
       end
     end
 
-    class VersionScreenshot < Struct.new(:display_target, :file_name, :position)
+    class VersionScreenshot < Struct.new(:display_target, :file_name, :position, :locale_name)
       include MetadataImage
 
       def to_s
-        "(#{self.position}) #{self.display_target} - #{self.file_name}"
+        "#{self.locale_name} - (#{self.position}) #{self.display_target} - #{self.file_name}"
       end
 
       def normalized_filename
-        "#{self.position}_#{self.display_target}_#{normalized_source_filename}"
+        "#{self.locale_name}_#{self.position}_#{self.display_target}_#{normalized_source_filename}"
       end
     end
 
