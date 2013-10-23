@@ -1,7 +1,7 @@
 # itunes_transporter_generator [![Gem Version](https://badge.fury.io/rb/itunes_transporter_generator.png)](http://badge.fury.io/rb/itunes_transporter_generator)
 **CLI for generating and packaging app store assets for Game Center and In-App Purchases**
 
-Apple recently released their Transporter app (http://bit.ly/UcEhAh) which is a handy way to manage your App Store Packages (.itmsp) instead of having to input achievements, leaderboards, and in-app purchases through iTunes Connect. Unfortunately, there isn't an easy way to generate these packages. Why write XML by hand and deal with the hassle of calculating MD5 and file sizes? Why not define your Game Center and In-App Purchases in a simple format and have your App Store Package generated for you?
+Apple recently released their Transporter app (http://bit.ly/UcEhAh) which is a handy way to manage your App Store Packages (.itmsp) instead of having to input version information, achievements, leaderboards, and in-app purchases through iTunes Connect. Unfortunately, there isn't an easy way to generate these packages. Why write XML by hand and deal with the hassle of calculating MD5 and file sizes? Why not define your Game Center and In-App Purchases in a simple format and have your App Store Package generated for you?
 
 ## Installation
 ```sh
@@ -14,7 +14,7 @@ $ gem install itunes_transporter_generator
 First, you'll need to be familiar with the app metadata specification, available from the bottom navigation in the Manage Your Applications section of iTunes Connect, which outlines all the possible information describing an achievement, leaderboard, or in-app purchase.
 
 ### Describe your application metadata
-Next, you'll need to create a YAML file describing your company information and achievement, leaderboard, and/or in-app purchase details. The beauty of describing your app store assets in YAML is no hand writing XML making it understandable at a glance, and you can store your configuration in source control.
+Next, you'll need to create a YAML file describing your company information, locale-specific version information, and achievement, leaderboard, and/or in-app purchase details. The beauty of describing your app store assets in YAML is no hand writing XML making it understandable at a glance, and you can store your configuration in source control.
 
 ### Generate the .itmsp
 This is as simple as running the following command in the folder containing your YAML config file and all referenced images.
@@ -27,7 +27,7 @@ $ itmsp package -i <configuration file>
 You can now upload your .itmsp package to iTunes Connect using the Transporter tool. Alternatively, there is another great open-source tool which wraps some of the complexities of running Transporter directly (https://github.com/sshaw/itunes_store_transporter)
 
 ## Sample Config file
-Below is a sample configuration file describing an achievement, leaderboard, and in-app purchase. The specific metadata required for each item type is fully described in the [App Metadata Specification guide](http://bit.ly/TtHMF6)
+Below is a sample configuration file describing an app version for the en-US locale, achievement, leaderboard, and different types of in-app purchases. The specific metadata required for each item type is fully described in the [App Metadata Specification guide](http://bit.ly/TtHMF6)
 
 IMPORTANT: please note the syntax for multiline descriptions with extra line breaks. This is the literal syntax for [YAML used for multiline strings](http://www.yaml.org/YAML_for_ruby.html#extra_trailing_newlines_with_spaces). Also note the indentation.
 
