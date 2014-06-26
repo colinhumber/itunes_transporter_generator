@@ -19,6 +19,7 @@ module Itunes
       attr_accessor :purchases
       attr_accessor :output
       attr_accessor :versions
+      attr_accessor :should_prefix_images
 
       def initialize(options)
         @files_to_process = ['metadata.xml']
@@ -28,6 +29,7 @@ module Itunes
 
         metadata = metadata_from_yaml(config_file)
 
+        @should_prefix_images = options.prefix_images || false
         @id_prefix = metadata[:id_prefix]
         @provider = metadata[:provider]
         @team_id = metadata[:team_id]
@@ -53,7 +55,7 @@ module Itunes
                     doc.cdata!(locale.description)
                   end
                 end
-                
+
                 if locale.keywords
                   doc.keywords() do
                     locale.keywords.each do |keyword|
@@ -210,7 +212,7 @@ module Itunes
             create_image_xml(doc, screenshot)
           end
 
-          doc.review_notes(family.review_notes)
+          doc.review_notes(family.review_notes) if family.review_notes
 
           family.purchases.each do |purchase|
             create_in_app_purchase_xml(doc, purchase)
@@ -222,7 +224,7 @@ module Itunes
         image_path = File.join(Dir.pwd,image.file_name)
         @images_to_process << image
 
-        doc.file_name(image.normalized_filename)
+        doc.file_name(image.normalized_filename(@should_prefix_images))
         doc.size(File.size?(image.file_name))
         doc.checksum(Digest::MD5.file(image_path).hexdigest, 'type' => 'md5')
       end
@@ -306,7 +308,7 @@ module Itunes
           end
 
           @images_to_process.each do |image|
-            FileUtils.cp(image.file_name, File.join(itmsp_dir,image.normalized_filename))
+            FileUtils.cp(image.file_name, File.join(itmsp_dir, image.normalized_filename(@should_prefix_images)))
           end
 
           output[:messages] << "Successfully created iTunes metadata package: #{itmsp_dir}"
