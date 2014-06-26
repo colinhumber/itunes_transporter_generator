@@ -85,8 +85,12 @@ module Itunes
         "#{self.locale_name} - (#{self.position}) #{self.display_target} - #{self.file_name}"
       end
 
-      def normalized_filename
-        "#{self.locale_name}_#{self.position}_#{self.display_target}_#{normalized_source_filename}"
+      def normalized_filename(include_prefix)
+        if include_prefix
+          "#{self.locale_name}_#{self.position}_#{self.display_target}_#{normalized_source_filename}"
+        else
+          "#{normalized_source_filename}"
+        end
       end
     end
 
@@ -97,8 +101,12 @@ module Itunes
         "achievement #{self.id} - #{self.file_name}"
       end
 
-      def normalized_filename
-        "achievement_#{friendly_filename(id)}_#{normalized_source_filename}"
+      def normalized_filename(include_prefix)
+        if include_prefix
+          "achievement_#{friendly_filename(id)}_#{normalized_source_filename}"
+        else
+          "#{normalized_source_filename}"
+        end
       end
     end
 
@@ -109,8 +117,12 @@ module Itunes
         "leaderboard #{self.id} - #{self.file_name}"
       end
 
-      def normalized_filename
-        "leaderboard_#{friendly_filename(id)}_#{normalized_source_filename}"
+      def normalized_filename(include_prefix)
+        if include_prefix
+          "leaderboard_#{friendly_filename(id)}_#{normalized_source_filename}"
+        else
+          "#{normalized_source_filename}"
+        end
       end
     end
 
@@ -121,8 +133,12 @@ module Itunes
         "iap #{self.id} - #{self.file_name}"
       end
 
-      def normalized_filename
-        "iap_#{friendly_filename(id)}_#{normalized_source_filename}"
+      def normalized_filename(include_prefix)
+        if include_prefix
+          "iap_#{friendly_filename(id)}_#{normalized_source_filename}"
+        else
+            "#{normalized_source_filename}"
+        end
       end
     end
 
@@ -133,8 +149,12 @@ module Itunes
         "iap #{self.name} - #{self.file_name}"
       end
 
-      def normalized_filename
-        "iap_#{friendly_filename(name)}_#{normalized_source_filename}"
+      def normalized_filename(include_prefix)
+        if include_prefix
+          "iap_#{friendly_filename(name)}_#{normalized_source_filename}"
+        else
+          "#{normalized_source_filename}"
+        end
       end
     end
   end
