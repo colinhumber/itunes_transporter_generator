@@ -28,6 +28,10 @@ versions:
             - 'test-h568-2@2x.png'
           iphone_3.5in:
             - 'test.png'
+          iphone_4.7in:
+            - 'test.png'
+          iphone_5.5in:
+            - 'test.png'
           ipad:
             - 'test-ipad.png'
       - name: fi
@@ -52,6 +56,10 @@ versions:
             - 'test-h568@2x.png'
             - 'test-h568-2@2x.png'
           iphone_3.5in:
+            - 'test.png'
+          iphone_4.7in:
+            - 'test.png'
+          iphone_5.5in:
             - 'test.png'
           ipad:
             - 'test-ipad.png'

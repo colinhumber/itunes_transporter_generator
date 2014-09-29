@@ -66,6 +66,10 @@ versions:
             - 'test-h568-2@2x.png'
           iphone_3.5in:
             - 'test.png'
+          iphone_4.7in:
+            - 'test.png'
+          iphone_5.5in:
+            - 'test.png'
           ipad:
             - 'test-ipad.png'
       - name: fi
@@ -90,6 +94,10 @@ versions:
             - 'test-h568@2x.png'
             - 'test-h568-2@2x.png'
           iphone_3.5in:
+            - 'test.png'
+          iphone_4.7in:
+            - 'test.png'
+          iphone_5.5in:
             - 'test.png'
           ipad:
             - 'test-ipad.png'
@@ -259,6 +267,16 @@ breaks
                   <size>147834</size>
                   <checksum type="md5">5db692abb9ae13bbb621cba672319ad9</checksum>
                 </software_screenshot>
+                <software_screenshot display_target="iOS-4.7-in" position="1">
+                  <file_name>test.png</file_name>
+                  <size>147834</size>
+                  <checksum type="md5">5db692abb9ae13bbb621cba672319ad9</checksum>
+                </software_screenshot>
+                <software_screenshot display_target="iOS-5.5-in" position="1">
+                  <file_name>test.png</file_name>
+                  <size>147834</size>
+                  <checksum type="md5">5db692abb9ae13bbb621cba672319ad9</checksum>
+                </software_screenshot>
                 <software_screenshot display_target="iOS-iPad" position="1">
                   <file_name>test-ipad.png</file_name>
                   <size>49743</size>
@@ -300,6 +318,16 @@ breaks
                   <checksum type="md5">3d3cd97260a3d61c0384127979253c5a</checksum>
                 </software_screenshot>
                 <software_screenshot display_target="iOS-3.5-in" position="1">
+                  <file_name>test.png</file_name>
+                  <size>147834</size>
+                  <checksum type="md5">5db692abb9ae13bbb621cba672319ad9</checksum>
+                </software_screenshot>
+                <software_screenshot display_target="iOS-4.7-in" position="1">
+                  <file_name>test.png</file_name>
+                  <size>147834</size>
+                  <checksum type="md5">5db692abb9ae13bbb621cba672319ad9</checksum>
+                </software_screenshot>
+                <software_screenshot display_target="iOS-5.5-in" position="1">
                   <file_name>test.png</file_name>
                   <size>147834</size>
                   <checksum type="md5">5db692abb9ae13bbb621cba672319ad9</checksum>
@@ -526,6 +554,7 @@ breaks
     </software_metadata>
   </software>
 </package>
+
 ```
 
 ## Todo

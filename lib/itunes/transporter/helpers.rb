@@ -67,7 +67,7 @@ module Itunes
 
       def parse_achievements(objs)
         achievements = []
-        
+
         if objs.has_key?('achievements')
           objs['achievements'].each do |dict|
             achievement = Achievement.new
@@ -94,7 +94,7 @@ module Itunes
             achievements << achievement
           end
         end
-        achievements  
+        achievements
       end
 
       def parse_leaderboards(objs)
