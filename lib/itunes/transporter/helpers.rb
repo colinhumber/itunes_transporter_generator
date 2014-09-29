@@ -5,7 +5,7 @@ module Itunes
   module Transporter
     module Helpers
 
-      KNOWN_DISPLAY_TARGETS = {'ipad' => 'iOS-iPad', 'iphone_3.5in' => 'iOS-3.5-in', 'iphone_4in' =>'iOS-4-in'}
+      KNOWN_DISPLAY_TARGETS = {'ipad' => 'iOS-iPad', 'iphone_3.5in' => 'iOS-3.5-in', 'iphone_4in' =>'iOS-4-in', 'iphone_4.7in' => 'iOS-4.7-in', 'iphone_5.5in' => 'iOS-5.5-in'}
 
       def metadata_from_yaml(yaml_file)
         objs = YAML.load_file(Dir.pwd + "/#{yaml_file}")
