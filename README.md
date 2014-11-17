@@ -1,3 +1,6 @@
+# ATTENTION:
+I haven't had a lot of time to work on this lately, and a new tool recently popped up that is much more robust and works great! I'm probably going to be sunsetting this project soon, so I would highly recommend checking out [Deliver](https://github.com/KrauseFx/deliver).
+
 # itunes_transporter_generator [![Gem Version](https://badge.fury.io/rb/itunes_transporter_generator.png)](http://badge.fury.io/rb/itunes_transporter_generator)
 **CLI for generating and packaging app store assets for Game Center and In-App Purchases**
 
